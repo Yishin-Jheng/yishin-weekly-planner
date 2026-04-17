@@ -1,0 +1,652 @@
+@import "tailwindcss";
+
+/*
+  @theme 將現有 CSS 變數橋接為 Tailwind design token。
+  新增的組件可使用 text-accent / bg-surface 等 utility class，
+  與下方 :root 指向同一個設計來源，無需雙重維護。
+*/
+@theme {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-text-base: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-text-hint: var(--text-hint);
+  --color-accent: var(--accent);
+  --color-accent-bg: var(--accent-bg);
+  --color-accent-mid: var(--accent-mid);
+  --color-success: var(--success);
+  --color-success-bg: var(--success-bg);
+  --color-warning: var(--warning);
+  --color-warning-bg: var(--warning-bg);
+}
+
+/* ── Design tokens ── */
+:root {
+  --bg: #f9f8f6;
+  --surface: #ffffff;
+  --surface-2: #f1efe8;
+  --border: #e4e2da;
+  --border-strong: #c8c6be;
+  --text: #2c2c2a;
+  --text-muted: #888780;
+  --text-hint: #b4b2a9;
+  --accent: #185fa5;
+  --accent-bg: #e6f1fb;
+  --accent-mid: #378add;
+  --success: #3b6d11;
+  --success-bg: #eaf3de;
+  --warning: #854f0b;
+  --warning-bg: #fbf3e5;
+  --tag-react: #533ab7;
+  --tag-react-bg: #eeedfe;
+  --tag-ts: #0f6e56;
+  --tag-ts-bg: #e1f5ee;
+  --tag-fm: #993c1d;
+  --tag-fm-bg: #faece7;
+  --sprint0: #185fa5;
+  --sprint0-bg: #e6f1fb;
+  --radius: 8px;
+  --radius-lg: 12px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family:
+    "Noto Sans TC",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 0;
+}
+
+/* ── Header ── */
+.header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 24px 32px 0;
+}
+.header-top {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+.header-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.3px;
+}
+.header-sub {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.header-milestone {
+  margin-left: auto;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.milestone-chip {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  background: var(--surface-2);
+}
+.milestone-chip.active {
+  background: var(--warning-bg);
+  border-color: #f8d090;
+  color: var(--warning);
+}
+
+/* ── Week tabs ── */
+.week-tabs {
+  height: 70px;
+  display: flex;
+  gap: 2px;
+  overflow-x: auto;
+  padding-bottom: 0;
+}
+.week-tab {
+  flex-shrink: 0;
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: var(--radius) var(--radius) 0 0;
+  border-bottom: 2px solid transparent;
+  transition:
+    color 0.15s,
+    border-color 0.15s,
+    background 0.15s;
+  white-space: nowrap;
+}
+.week-tab:hover {
+  background: var(--surface-2);
+  color: var(--text);
+}
+.week-tab.active {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+  background: transparent;
+}
+.week-tab .tab-label {
+  display: block;
+  font-size: 11px;
+  color: var(--text-hint);
+  margin-top: 2px;
+  font-weight: 400;
+}
+.week-tab.active .tab-label {
+  color: var(--accent-mid);
+}
+
+/* ── Tab: label row with close button ── */
+.week-tab-label-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.week-tab-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  font-size: 12px;
+  line-height: 1;
+  color: var(--text-hint);
+  cursor: pointer;
+  opacity: 0;
+  transition:
+    opacity 0.15s,
+    background 0.15s,
+    color 0.15s;
+  flex-shrink: 0;
+}
+.week-tab:hover .week-tab-close,
+.week-tab.active .week-tab-close {
+  opacity: 1;
+}
+.week-tab-close:hover {
+  background: var(--border);
+  color: var(--text);
+}
+
+/* ── Tab: delete confirmation ── */
+.week-tab-confirm {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px 12px;
+  border-radius: var(--radius) var(--radius) 0 0;
+  background: var(--warning-bg);
+  border: 1px solid #f8d090;
+  border-bottom: 2px solid #f8be63;
+  white-space: nowrap;
+}
+.week-tab-confirm-text {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--warning);
+}
+.week-tab-confirm-actions {
+  display: flex;
+  gap: 4px;
+}
+.week-tab-confirm-btn-ok {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--warning);
+  background: var(--warning);
+  color: #fff;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.week-tab-confirm-btn-ok:hover {
+  opacity: 0.85;
+}
+.week-tab-confirm-btn-cancel {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.week-tab-confirm-btn-cancel:hover {
+  background: var(--surface-2);
+}
+
+/* ── Add Sprint button ── */
+.week-tab-add {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  height: 32px;
+  padding: 0 12px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-hint);
+  border: 1.5px dashed var(--border-strong);
+  background: transparent;
+  cursor: pointer;
+  border-radius: var(--radius);
+  align-self: center;
+  margin-left: 6px;
+  transition:
+    color 0.15s,
+    border-color 0.15s,
+    background 0.15s;
+  white-space: nowrap;
+}
+.week-tab-add:hover {
+  color: var(--accent);
+  border-color: var(--accent-mid);
+  background: var(--accent-bg);
+}
+.week-tab-add-icon {
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* ── Main layout ── */
+.main {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 24px 24px;
+}
+
+.schedule-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.sidebar-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ── Card ── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+}
+.card-title {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+/* ── Day row ── */
+.day-row {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 12px;
+  padding: 10px 0;
+  border-top: 1px solid var(--border);
+}
+.day-row:first-of-type {
+  border-top: none;
+}
+.day-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding-top: 2px;
+  line-height: 1.4;
+}
+.day-label .day-date {
+  font-size: 11px;
+  color: var(--text-hint);
+  font-weight: 400;
+}
+.day-tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ── Task item ── */
+.task {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text);
+}
+.task input[type="checkbox"] {
+  flex-shrink: 0;
+  margin-top: 3px;
+  width: 14px;
+  height: 14px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+.task.done span {
+  text-decoration: line-through;
+  color: var(--text-hint);
+}
+.task-block {
+  font-size: 11px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-weight: 500;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.tag-am {
+  background: var(--accent-bg);
+  color: var(--accent);
+}
+.tag-pm {
+  background: var(--success-bg);
+  color: var(--success);
+}
+.tag-react {
+  background: var(--tag-react-bg);
+  color: var(--tag-react);
+}
+.tag-ts {
+  background: var(--tag-ts-bg);
+  color: var(--tag-ts);
+}
+.tag-fm {
+  background: var(--tag-fm-bg);
+  color: var(--tag-fm);
+}
+
+/* ── Min Win Badge ── */
+.min-win-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--warning-bg);
+  border: 1px solid #f8d090;
+  border-radius: var(--radius);
+  padding: 6px 10px;
+  margin-bottom: 2px;
+}
+.min-win-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--warning);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.min-win-input {
+  flex: 1;
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--text);
+  background: transparent;
+  border: none;
+  outline: none;
+  min-width: 0;
+}
+.min-win-input::placeholder {
+  color: #c8a97a;
+}
+
+/* ── Time block ── */
+.time-block {
+  border-left: 3px solid var(--border-strong);
+  padding: 10px 14px;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  margin-bottom: 8px;
+}
+.time-block.deep {
+  border-left-color: var(--accent-mid);
+  background: var(--accent-bg);
+}
+.time-block.output {
+  border-left-color: #3b6d11;
+  background: var(--success-bg);
+}
+.time-block.review {
+  border-left-color: #854f0b;
+  background: var(--warning-bg);
+}
+.time-block.lunch {
+  border-left-color: var(--border-strong);
+  background: var(--surface-2);
+}
+.tb-time {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.3px;
+}
+.tb-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin: 2px 0 3px;
+}
+.tb-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+/* ── Week note / journal ── */
+.journal-area {
+  width: 100%;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 10px 12px;
+  resize: vertical;
+  min-height: 100px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.journal-area:focus {
+  border-color: var(--accent-mid);
+}
+.journal-area::placeholder {
+  color: var(--text-hint);
+}
+
+/* ── Sprint review ── */
+.sprint-metric {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-top: 1px solid var(--border);
+  font-size: 13px;
+}
+.sprint-metric:first-of-type {
+  border-top: none;
+}
+.sprint-metric label {
+  color: var(--text-muted);
+}
+.sprint-select {
+  width: 100px;
+  font-size: 12px;
+  text-align: center;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 3px 8px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+}
+
+/* ── Progress bar ── */
+.progress-bar {
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--accent-mid);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-hint);
+  margin-top: 4px;
+}
+
+/* ── Callout ── */
+.callout {
+  background: var(--warning-bg);
+  border: 1px solid #f8d090;
+  border-radius: var(--radius);
+  padding: 10px 14px;
+  font-size: 13px;
+  color: var(--warning);
+  line-height: 1.6;
+}
+.callout strong {
+  color: var(--warning);
+}
+
+/* ── Mini Calendar ── */
+.mini-cal {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.mini-cal-header {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.4px;
+}
+.mini-cal-row {
+  display: flex;
+  gap: 5px;
+}
+.mini-cal-row-labels {
+  margin-bottom: 3px;
+}
+.mini-cal-cell {
+  flex: 1;
+  height: 30px;
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  cursor: pointer;
+  border: none;
+  font-family: inherit;
+  transition:
+    opacity 0.1s,
+    background 0.15s;
+  position: relative;
+}
+.mini-cal-cell-label {
+  height: 15px;
+  color: var(--text-hint);
+  font-size: 11px;
+  background: transparent;
+  cursor: default;
+  font-weight: 600;
+}
+.mini-cal-cell-pad {
+  background: transparent;
+  cursor: default;
+  pointer-events: none;
+}
+/* Current sprint week – darker gray */
+.mini-cal-cell-sprint {
+  background: #d4d2ca;
+  color: var(--text-muted);
+}
+.mini-cal-cell-sprint:hover {
+  background: #c4c2ba;
+}
+/* Other weeks – lighter gray */
+.mini-cal-cell-other {
+  background: var(--surface-2);
+  color: var(--text-hint);
+}
+.mini-cal-cell-other:hover {
+  background: var(--border);
+}
+/* Checked – accent blue */
+.mini-cal-cell-checked {
+  background: var(--accent-mid);
+  color: #fff;
+}
+.mini-cal-cell-checked:hover {
+  opacity: 0.85;
+}
+/* Today indicator – small dot below the number */
+.mini-cal-today-dot {
+  display: block;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.7;
+  flex-shrink: 0;
+}
+/* Today cell – bold number */
+.mini-cal-cell-today {
+  font-weight: 700;
+}
+
+/* ── Responsive ── */
+@media (max-width: 700px) {
+  .main {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+  .header {
+    padding: 16px 16px 0;
+  }
+  .header-milestone {
+    display: none;
+  }
+}
