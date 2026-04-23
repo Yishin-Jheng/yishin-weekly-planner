@@ -12,7 +12,7 @@ const SPRINT0_DAYS_ISO = [
 
 interface Props {
   checkboxes: Record<string, boolean>;
-  textareas: Record<string, string>;
+  textAreas: Record<string, string>;
   selects: Record<string, number>;
   onCheckbox: (key: string, checked: boolean) => void;
   onTextarea: (key: string, value: string) => void;
@@ -23,7 +23,7 @@ interface Props {
 
 export default function Sprint0Panel({
   checkboxes,
-  textareas,
+  textAreas,
   selects,
   onCheckbox,
   onTextarea,
@@ -32,7 +32,7 @@ export default function Sprint0Panel({
   onToggle,
 }: Props) {
   const cb = (key: string) => checkboxes[key] ?? false;
-  const ta = (key: string) => textareas[key] ?? "";
+  const ta = (key: string) => textAreas[key] ?? "";
   const sel = (key: string) => selects[key] ?? 0;
 
   return (

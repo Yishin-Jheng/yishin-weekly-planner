@@ -1,13 +1,15 @@
-import type { SprintConfig } from "../../types";
+import type { SprintConfig, FrictionEntry } from "../../types";
 import Task from "../Task";
 import TimeBlock from "../TimeBlock";
 import MiniCalendar from "../MiniCalendar";
 import MinWinBadge from "../MinWinBadge";
+import FrictionLog from "../FrictionLog";
+import FrictionPatternSummary from "../FrictionPatternSummary";
 
 interface Props {
   config: SprintConfig;
   checkboxes: Record<string, boolean>;
-  textareas: Record<string, string>;
+  textAreas: Record<string, string>;
   selects: Record<string, number>;
   minWins: Record<string, string>;
   onCheckbox: (key: string, checked: boolean) => void;
@@ -16,12 +18,15 @@ interface Props {
   onMinWin: (key: string, value: string) => void;
   checkedDates: string[];
   onToggle: (date: string) => void;
+  frictionEntries: FrictionEntry[];
+  onAddFriction: (entry: Omit<FrictionEntry, "id">) => void;
+  onDeleteFriction: (id: string) => void;
 }
 
 export default function SprintPanel({
   config,
   checkboxes,
-  textareas,
+  textAreas,
   selects,
   minWins,
   onCheckbox,
@@ -30,6 +35,9 @@ export default function SprintPanel({
   onMinWin,
   checkedDates,
   onToggle,
+  frictionEntries,
+  onAddFriction,
+  onDeleteFriction,
 }: Props) {
   const {
     id,
@@ -45,7 +53,7 @@ export default function SprintPanel({
   } = config;
 
   const cb = (key: string) => checkboxes[key] ?? false;
-  const ta = (key: string) => textareas[key] ?? "";
+  const ta = (key: string) => textAreas[key] ?? "";
   const sel = (key: string) => selects[key] ?? 0;
 
   const progressSelectKey = `${id}_progress`;
@@ -139,8 +147,16 @@ export default function SprintPanel({
           />
         </div>
 
+        <FrictionLog
+          entries={frictionEntries}
+          onAdd={onAddFriction}
+          onDelete={onDeleteFriction}
+        />
+
         <div className="card">
           <div className="card-title">{reviewTitle}</div>
+          <FrictionPatternSummary entries={frictionEntries} />
+
           <div className="sprint-metric">
             <label>與前兩週相比</label>
             <select

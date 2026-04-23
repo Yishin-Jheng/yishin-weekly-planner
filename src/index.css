@@ -637,6 +637,271 @@ body {
   font-weight: 700;
 }
 
+/* ── Friction Log ── */
+.friction-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.friction-add-btn {
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--accent);
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-mid);
+  border-radius: 20px;
+  padding: 3px 10px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.friction-add-btn:hover {
+  opacity: 0.8;
+}
+
+/* Inline form */
+.friction-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 12px;
+  animation: frictionFadeIn 0.2s ease;
+}
+@keyframes frictionFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.friction-form-top-row {
+  display: flex;
+  gap: 8px;
+}
+.friction-date-input {
+  font-family: inherit;
+  font-size: 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 3px 8px;
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  flex: 1;
+  min-width: 0;
+}
+.friction-slot-select {
+  flex: 1;
+  min-width: 0;
+  width: auto;
+}
+.friction-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.friction-tag {
+  font-family: inherit;
+  font-size: 11px;
+  padding: 3px 9px;
+  border-radius: 20px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+.friction-tag:hover {
+  background: var(--accent-bg);
+  color: var(--accent);
+  border-color: var(--accent-mid);
+}
+.friction-tag.active {
+  background: var(--accent-bg);
+  color: var(--accent);
+  border-color: var(--accent-mid);
+  font-weight: 600;
+}
+.friction-form-actions {
+  display: flex;
+  gap: 8px;
+}
+.friction-submit-btn {
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 14px;
+  border-radius: 6px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.friction-submit-btn:hover {
+  opacity: 0.85;
+}
+.friction-cancel-btn {
+  font-family: inherit;
+  font-size: 12px;
+  padding: 5px 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--text-muted);
+  cursor: pointer;
+}
+.friction-cancel-btn:hover {
+  background: var(--surface-2);
+}
+
+/* Entry list */
+.friction-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+.friction-empty {
+  font-size: 12px;
+  color: var(--text-hint);
+  line-height: 1.6;
+  padding: 4px 0 2px;
+}
+.friction-entry {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px 0;
+  border-top: 1px solid var(--border);
+  position: relative;
+}
+.friction-entry:first-child {
+  border-top: none;
+}
+.friction-entry-left {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 44px;
+  flex-shrink: 0;
+}
+.friction-entry-date {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.friction-entry-slot {
+  font-size: 10px;
+  color: var(--text-hint);
+  line-height: 1.3;
+}
+.friction-entry-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.friction-entry-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.friction-tag-display {
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 20px;
+  background: var(--accent-bg);
+  color: var(--accent);
+  font-weight: 500;
+}
+.friction-entry-note {
+  font-size: 11px;
+  color: var(--text-hint);
+  line-height: 1.5;
+}
+.friction-delete-btn {
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--text-hint);
+  cursor: pointer;
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.15s, background 0.15s, color 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.friction-entry:hover .friction-delete-btn {
+  opacity: 1;
+}
+.friction-delete-btn:hover {
+  background: var(--border);
+  color: var(--text);
+}
+
+/* Sprint Review: friction pattern summary */
+.friction-pattern {
+  padding: 10px 0 2px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 2px;
+}
+.friction-pattern-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-hint);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+.friction-pattern-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 5px;
+}
+.friction-pattern-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  width: 120px;
+  flex-shrink: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.friction-pattern-bar-wrap {
+  flex: 1;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.friction-pattern-bar {
+  height: 100%;
+  background: var(--accent-mid);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+  min-width: 8px;
+}
+.friction-pattern-count {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  width: 16px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
 /* ── Responsive ── */
 @media (max-width: 700px) {
   .main {

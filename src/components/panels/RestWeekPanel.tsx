@@ -2,14 +2,14 @@ import Task from "../Task";
 
 interface Props {
   checkboxes: Record<string, boolean>;
-  textareas: Record<string, string>;
+  textAreas: Record<string, string>;
   onCheckbox: (key: string, checked: boolean) => void;
   onTextarea: (key: string, value: string) => void;
 }
 
 export default function RestWeekPanel({
   checkboxes,
-  textareas,
+  textAreas,
   onCheckbox,
   onTextarea,
 }: Props) {
@@ -80,7 +80,7 @@ export default function RestWeekPanel({
           <textarea
             className="journal-area"
             placeholder="這週怎麼過的？有沒有真正放鬆到？"
-            value={textareas["journal-rest"] ?? ""}
+            value={textAreas["journal-rest"] ?? ""}
             onChange={(e) => onTextarea("journal-rest", e.target.value)}
           />
         </div>
