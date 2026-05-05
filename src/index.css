@@ -317,7 +317,7 @@ body {
   padding: 10px 0;
   border-top: 1px solid var(--border);
 }
-.day-row:first-of-type {
+.day-row:first-child {
   border-top: none;
 }
 .day-label {
@@ -346,6 +346,7 @@ body {
   font-size: 13px;
   line-height: 1.5;
   color: var(--text);
+  cursor: pointer;
 }
 .task input[type="checkbox"] {
   flex-shrink: 0;
@@ -353,7 +354,6 @@ body {
   width: 14px;
   height: 14px;
   accent-color: var(--accent);
-  cursor: pointer;
 }
 .task.done span {
   text-decoration: line-through;
@@ -484,6 +484,27 @@ body {
   color: var(--text-hint);
 }
 
+/* ── Vacation single-line input ── */
+.vacation-input {
+  width: 100%;
+  font-family: inherit;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 8px 12px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.vacation-input:focus {
+  border-color: var(--accent-mid);
+}
+.vacation-input::placeholder {
+  color: var(--text-hint);
+}
+
 /* ── Sprint review ── */
 .sprint-metric {
   display: flex;
@@ -531,20 +552,6 @@ body {
   font-size: 11px;
   color: var(--text-hint);
   margin-top: 4px;
-}
-
-/* ── Callout ── */
-.callout {
-  background: var(--warning-bg);
-  border: 1px solid #f8d090;
-  border-radius: var(--radius);
-  padding: 10px 14px;
-  font-size: 13px;
-  color: var(--warning);
-  line-height: 1.6;
-}
-.callout strong {
-  color: var(--warning);
 }
 
 /* ── Mini Calendar ── */
@@ -675,8 +682,14 @@ body {
   animation: frictionFadeIn 0.2s ease;
 }
 @keyframes frictionFadeIn {
-  from { opacity: 0; transform: translateY(-4px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 .friction-form-top-row {
   display: flex;
@@ -713,7 +726,10 @@ body {
   background: var(--surface);
   color: var(--text-muted);
   cursor: pointer;
-  transition: background 0.12s, color 0.12s, border-color 0.12s;
+  transition:
+    background 0.12s,
+    color 0.12s,
+    border-color 0.12s;
 }
 .friction-tag:hover {
   background: var(--accent-bg);
@@ -837,7 +853,10 @@ body {
   cursor: pointer;
   flex-shrink: 0;
   opacity: 0;
-  transition: opacity 0.15s, background 0.15s, color 0.15s;
+  transition:
+    opacity 0.15s,
+    background 0.15s,
+    color 0.15s;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -900,6 +919,95 @@ body {
   width: 16px;
   text-align: right;
   flex-shrink: 0;
+}
+
+/* ── Life List（放空週生活清單） ── */
+.life-list-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+.life-list-text {
+  flex: 1;
+  font-family: inherit;
+  font-size: 13px;
+  background: transparent;
+  border: none;
+  outline: none;
+  min-width: 0;
+  line-height: 1.5;
+  transition: color 0.15s;
+}
+.life-list-text::placeholder {
+  color: var(--text-hint);
+}
+.life-list-delete {
+  font-family: inherit;
+  font-size: 15px;
+  line-height: 1;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: var(--text-hint);
+  cursor: pointer;
+  flex-shrink: 0;
+  opacity: 0;
+  transition:
+    opacity 0.15s,
+    background 0.15s,
+    color 0.15s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+.life-list-item:hover .life-list-delete {
+  opacity: 1;
+}
+.life-list-delete:hover {
+  background: var(--border);
+  color: var(--text);
+}
+
+/* ── Accordion（出發點記錄） ── */
+.accordion-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  gap: 10px;
+  text-align: left;
+  font-family: inherit;
+}
+.accordion-chevron {
+  font-size: 20px;
+  line-height: 20px;
+  color: var(--text-hint);
+  flex-shrink: 0;
+  display: inline-block;
+  transition: transform 200ms ease;
+}
+.accordion-body {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 200ms ease;
+}
+.accordion-body.open {
+  grid-template-rows: 1fr;
+}
+.accordion-inner {
+  overflow: hidden;
+  padding-bottom: 0;
+}
+.accordion-body.open .accordion-inner {
+  padding-bottom: 10px;
 }
 
 /* ── Responsive ── */
