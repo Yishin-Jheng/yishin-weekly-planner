@@ -56,25 +56,23 @@ export default function Sprint0Panel({
                 checked={cb("s0_mon_0")}
                 onChange={onCheckbox}
               >
-                <span className="task-block tag-am">上午</span>{" "}
-                整理開發環境、更新 VS Code、登入學習平台
+                <span className="task-block tag-am">上午</span>
+                整理開發環境、登入學習平台
               </Task>
               <Task
                 stateKey="s0_mon_1"
                 checked={cb("s0_mon_1")}
                 onChange={onCheckbox}
               >
-                <span className="task-block tag-am">上午</span>{" "}
-                打開舊作品，記下「看不懂處 / 改進點 / 優點」三件事
+                <span className="task-block tag-am">上午</span>
+                補上放空週未完成的任務與週回顧
               </Task>
               <Task
                 stateKey="s0_mon_2"
                 checked={cb("s0_mon_2")}
                 onChange={onCheckbox}
               >
-                <span className="task-block tag-pm">下午</span>{" "}
-                <span className="task-block tag-fm">FM</span> Frontend Mentor
-                Newbie 靜態卡片（純 HTML + CSS）
+                下午看牙醫 🩺
               </Task>
             </div>
           </div>
@@ -91,17 +89,24 @@ export default function Sprint0Panel({
                 checked={cb("s0_tue_0")}
                 onChange={onCheckbox}
               >
-                <span className="task-block tag-am">上午</span>{" "}
-                <span className="task-block tag-ts">TS</span> 1.5x
-                倍速看「為什麼要有 TypeScript」，只看不寫
+                <span className="task-block tag-am">上午</span>
+                透過課程影片先理解「為什麼要有 TypeScript」
               </Task>
               <Task
                 stateKey="s0_tue_1"
                 checked={cb("s0_tue_1")}
                 onChange={onCheckbox}
               >
-                <span className="task-block tag-pm">下午</span> 把週一 FM
-                卡片最簡單部分改成 TS 寫法（哪怕只改一行）
+                <span className="task-block tag-am">上午</span>
+                打開舊作品，記下「看不懂處 / 改進點 / 優點」三件事
+              </Task>
+              <Task
+                stateKey="s0_tue_2"
+                checked={cb("s0_tue_2")}
+                onChange={onCheckbox}
+              >
+                <span className="task-block tag-pm">下午</span>
+                Frontend Mentor Newbie 實做一個找回手感的題目
               </Task>
             </div>
           </div>
@@ -118,18 +123,16 @@ export default function Sprint0Panel({
                 checked={cb("s0_wed_0")}
                 onChange={onCheckbox}
               >
-                <span className="task-block tag-am">上午</span>{" "}
-                <span className="task-block tag-react">React</span> 跟著 Jonas
-                動手寫範例，逐行確認理解
+                <span className="task-block tag-am">上午</span>
+                先規劃今天預計要看的課程再開始上課
               </Task>
               <Task
                 stateKey="s0_wed_1"
                 checked={cb("s0_wed_1")}
                 onChange={onCheckbox}
               >
-                <span className="task-block tag-pm">下午</span>{" "}
-                <span className="task-block tag-fm">FM</span> 第二個 Newbie
-                題目，從一開始就用 TS 建檔
+                <span className="task-block tag-pm">下午</span> 把週二完成的 FM
+                題目最簡單部分改成 TS（哪怕只改一行）
               </Task>
             </div>
           </div>
@@ -146,16 +149,16 @@ export default function Sprint0Panel({
                 checked={cb("s0_thu_0")}
                 onChange={onCheckbox}
               >
-                <span className="task-block tag-am">上午</span>{" "}
-                針對週一「改進點」，在草稿檔案寫一小段 Refactor
+                <span className="task-block tag-am">上午</span>
+                針對週二提出的「改進點」，嘗試寫寫看一小段 Refactor
               </Task>
               <Task
                 stateKey="s0_thu_1"
                 checked={cb("s0_thu_1")}
                 onChange={onCheckbox}
               >
-                <span className="task-block tag-pm">下午</span>{" "}
-                按能量狀態自由選：繼續課程 or 再做一個小題目
+                <span className="task-block tag-pm">下午</span>
+                實做第二個 Newbie 題目，從一開始就用 TS 建檔
               </Task>
             </div>
           </div>
@@ -172,16 +175,16 @@ export default function Sprint0Panel({
                 checked={cb("s0_fri_0")}
                 onChange={onCheckbox}
               >
-                <span className="task-block tag-am">上午</span> 回顧：對 TS
-                的陌生感是否比週一低了一點點？
+                <span className="task-block tag-am">上午</span>
+                確認下週一課程章節，寫下來貼桌邊
               </Task>
               <Task
                 stateKey="s0_fri_1"
                 checked={cb("s0_fri_1")}
                 onChange={onCheckbox}
               >
-                <span className="task-block tag-pm">下午</span>{" "}
-                確認下週一課程章節，寫下來貼桌邊
+                <span className="task-block tag-pm">下午</span>
+                填寫本週回顧週記（對 TS 的陌生感是否更低了？）
               </Task>
               <Task
                 stateKey="s0_fri_2"

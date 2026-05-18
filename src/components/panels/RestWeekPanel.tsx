@@ -26,18 +26,18 @@ function loadLifeList(): LifeItem[] {
 
 const baselineQuestions = [
   {
-    label: "現在的我，對 React 最不確定的地方是？",
+    label: "現在對 React 最不確定的地方是？",
     key: "vacation-week-baseline-react",
     placeholder:
       "例如：component 之間的狀態管理，常常搞不清楚什麼時候該用 props、什麼時候該用 context",
   },
   {
-    label: "TypeScript 對我來說現在感覺有多陌生？",
+    label: "現在感覺對 TypeScript 有多陌生？",
     key: "vacation-week-baseline-typescript",
     placeholder: "例如：看得懂基本語法，但一遇到泛型就完全不知道在幹嘛",
   },
   {
-    label: "這次空白期，我最害怕發生的事是什麼？",
+    label: "這次空白期最害怕發生什麼樣的事？",
     key: "vacation-week-baseline-fear",
     placeholder: "例如：怕自己三個月後發現什麼都沒學進去",
   },
@@ -148,7 +148,7 @@ export default function RestWeekPanel({
           </div>
 
           {/* 這週的生活清單 */}
-          <div
+          {/* <div
             style={{
               borderTop: "1px solid var(--border)",
               paddingTop: 12,
@@ -229,7 +229,7 @@ export default function RestWeekPanel({
                 ))}
               </div>
             )}
-          </div>
+          </div> */}
 
           {/* 週五任務 */}
           <div className="day-row">
@@ -243,6 +243,7 @@ export default function RestWeekPanel({
                   key={stateKey}
                   stateKey={stateKey}
                   checked={cb(stateKey)}
+                  disabled={true}
                   onChange={onCheckbox}
                 >
                   {content}
@@ -273,7 +274,7 @@ export default function RestWeekPanel({
             </div>
             <textarea
               className="journal-area"
-              style={{ height: 120, minHeight: 120 }}
+              style={{ height: 200, minHeight: 200 }}
               placeholder="感謝？遺憾？委屈？解脫？都可以寫。這裡只有你會看到。"
               value={textAreas["vacation-week-farewell"] ?? ""}
               onChange={(e) =>
@@ -300,15 +301,6 @@ export default function RestWeekPanel({
             <div className="card-title" style={{ marginBottom: 0 }}>
               出發點記錄
             </div>
-            <span
-              style={{
-                fontSize: 11,
-                color: "var(--text-hint)",
-                fontWeight: 400,
-              }}
-            >
-              讓三個月後的你可以更清楚地看到自己從哪裡出發
-            </span>
           </div>
 
           <div>
@@ -380,50 +372,6 @@ export default function RestWeekPanel({
                 </div>
               );
             })}
-          </div>
-
-          <div
-            style={{ borderTop: "1px solid var(--border)", marginBottom: 20 }}
-          />
-
-          {/* 週記與心得 */}
-          <div style={{ marginBottom: 20 }}>
-            <div className="card-title">週記與心得</div>
-            <textarea
-              className="journal-area"
-              placeholder="這週怎麼過的？有沒有真正放鬆到？"
-              value={textAreas["journal-rest"] ?? ""}
-              onChange={(e) => onTextarea("journal-rest", e.target.value)}
-            />
-          </div>
-
-          <div
-            style={{ borderTop: "1px solid var(--border)", marginBottom: 12 }}
-          />
-
-          {/* 這週我想好好做的一件事 */}
-          <div>
-            <div
-              style={{
-                fontSize: 11,
-                fontWeight: 600,
-                textTransform: "uppercase",
-                letterSpacing: "0.6px",
-                color: "var(--text-muted)",
-                marginBottom: 8,
-              }}
-            >
-              這週我想好好做的一件事
-            </div>
-            <input
-              type="text"
-              className="vacation-input"
-              placeholder="可以是去一個想去的地方、煮一頓飯、或只是睡到自然醒連續五天"
-              value={textAreas["vacation-week-life-intention"] ?? ""}
-              onChange={(e) =>
-                onTextarea("vacation-week-life-intention", e.target.value)
-              }
-            />
           </div>
         </div>
       </div>
