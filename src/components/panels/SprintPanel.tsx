@@ -1,10 +1,10 @@
-import type { SprintConfig, FrictionEntry } from "../../types";
-import Task from "../Task";
-import TimeBlock from "../TimeBlock";
+import type { SprintConfig, FrictionEntry, SprintMilestone, DailyTodoEntry } from "../../types";
 import MiniCalendar from "../MiniCalendar";
 import MinWinBadge from "../MinWinBadge";
 import FrictionLog from "../FrictionLog";
 import FrictionPatternSummary from "../FrictionPatternSummary";
+import WeeklyMilestones from "../WeeklyMilestones";
+import DailyTodoList from "../DailyTodoList";
 
 interface Props {
   config: SprintConfig;
@@ -21,15 +21,21 @@ interface Props {
   frictionEntries: FrictionEntry[];
   onAddFriction: (entry: Omit<FrictionEntry, "id">) => void;
   onDeleteFriction: (id: string) => void;
+  milestone: SprintMilestone | null;
+  onSetMilestone: (text: string) => void;
+  onCompleteMilestone: () => void;
+  onResetMilestone: () => void;
+  dailyTodos: Record<string, DailyTodoEntry[]>;
+  onAddDailyTodo: (dayKey: string, text: string) => void;
+  onToggleDailyTodo: (dayKey: string, id: string, checked: boolean) => void;
+  onDeleteDailyTodo: (dayKey: string, id: string) => void;
 }
 
 export default function SprintPanel({
   config,
-  checkboxes,
   textAreas,
   selects,
   minWins,
-  onCheckbox,
   onTextarea,
   onSelect,
   onMinWin,
@@ -38,6 +44,14 @@ export default function SprintPanel({
   frictionEntries,
   onAddFriction,
   onDeleteFriction,
+  milestone,
+  onSetMilestone,
+  onCompleteMilestone,
+  onResetMilestone,
+  dailyTodos,
+  onAddDailyTodo,
+  onToggleDailyTodo,
+  onDeleteDailyTodo,
 }: Props) {
   const {
     id,
@@ -52,7 +66,6 @@ export default function SprintPanel({
     extraMetric,
   } = config;
 
-  const cb = (key: string) => checkboxes[key] ?? false;
   const ta = (key: string) => textAreas[key] ?? "";
   const sel = (key: string) => selects[key] ?? 0;
 
@@ -63,33 +76,12 @@ export default function SprintPanel({
     <>
       {/* ── 左欄 ── */}
       <div className="schedule-col">
-        <div className="card">
-          <div className="card-title">每日節奏 — 正式開工（10:00–17:00）</div>
-          <TimeBlock
-            type="deep"
-            time="10:00 – 13:00"
-            label="🌊 深潛時間"
-            desc="專攻 Jonas React 核心章節或 TS 複雜概念。能量最高，只處理最需思考的東西。"
-          />
-          <TimeBlock
-            type="lunch"
-            time="13:00 – 14:00"
-            label="☕ 午休"
-            desc="遠離桌面，徹底放鬆大腦。"
-          />
-          <TimeBlock
-            type="output"
-            time="14:00 – 16:30"
-            label="💻 產出時間"
-            desc="實作 Frontend Mentor 題目，或翻新舊作品（著重 Coding 手感）。"
-          />
-          <TimeBlock
-            type="review"
-            time="16:30 – 17:00"
-            label="🤖 AI Review"
-            desc="把今日程式碼丟給 AI：型別定義優化、Clean Code 建議、組件結構改進。"
-          />
-        </div>
+        <WeeklyMilestones
+          milestone={milestone}
+          onSet={onSetMilestone}
+          onComplete={onCompleteMilestone}
+          onReset={onResetMilestone}
+        />
 
         <div className="card">
           <div className="card-title">{cardTitle}</div>
@@ -104,20 +96,12 @@ export default function SprintPanel({
                   value={minWins[`${id}_d${di}_minWin`] ?? ""}
                   onChange={(val) => onMinWin(`${id}_d${di}_minWin`, val)}
                 />
-                <Task
-                  stateKey={`${id}_d${di}_deep`}
-                  checked={cb(`${id}_d${di}_deep`)}
-                  onChange={onCheckbox}
-                >
-                  深潛：
-                </Task>
-                <Task
-                  stateKey={`${id}_d${di}_output`}
-                  checked={cb(`${id}_d${di}_output`)}
-                  onChange={onCheckbox}
-                >
-                  產出：
-                </Task>
+                <DailyTodoList
+                  entries={dailyTodos[`${id}_d${di}`] ?? []}
+                  onAdd={(text) => onAddDailyTodo(`${id}_d${di}`, text)}
+                  onToggle={(todoId, checked) => onToggleDailyTodo(`${id}_d${di}`, todoId, checked)}
+                  onDelete={(todoId) => onDeleteDailyTodo(`${id}_d${di}`, todoId)}
+                />
               </div>
             </div>
           ))}

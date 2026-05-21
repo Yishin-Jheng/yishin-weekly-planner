@@ -56,11 +56,12 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  font-size: 14px;
 }
 
 body {
   font-family:
-    "Noto Sans TC",
+    "Chiron GoRound TC",
     -apple-system,
     BlinkMacSystemFont,
     "Segoe UI",
@@ -84,13 +85,12 @@ body {
   margin-bottom: 20px;
 }
 .header-title {
-  font-size: 20px;
+  font-size: 24px;
   font-weight: 600;
   color: var(--text);
   letter-spacing: -0.3px;
 }
 .header-sub {
-  font-size: 13px;
   color: var(--text-muted);
 }
 .header-milestone {
@@ -100,7 +100,6 @@ body {
   align-items: center;
 }
 .milestone-chip {
-  font-size: 12px;
   padding: 4px 10px;
   border-radius: 20px;
   border: 1px solid var(--border);
@@ -113,6 +112,211 @@ body {
   color: var(--warning);
 }
 
+/* ── Gist Sync Button (in header) ── */
+.gist-sync-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  font-family: inherit;
+  color: var(--text-muted);
+  background: none;
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    color 0.15s;
+}
+.gist-sync-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+.gist-sync-icon--idle {
+  color: var(--text-muted);
+}
+.gist-sync-icon--syncing {
+  color: var(--accent);
+  display: inline-block;
+  animation: gist-spin 1s linear infinite;
+}
+.gist-sync-icon--synced {
+  color: var(--success);
+}
+.gist-sync-icon--error {
+  color: var(--warning);
+}
+
+@keyframes gist-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ── Gist Settings Modal ── */
+.gist-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gist-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+}
+.gist-modal {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  padding: 24px;
+  width: 420px;
+  max-width: 90vw;
+}
+.gist-close-btn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  line-height: 1;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
+  transition: color 0.15s;
+}
+.gist-close-btn:hover {
+  color: var(--text);
+}
+.gist-title {
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.gist-subtitle {
+  color: var(--text-muted);
+  margin-bottom: 16px;
+}
+.gist-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.gist-status-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.gist-status-label {
+  color: var(--text-muted);
+}
+.gist-status-value {
+  font-weight: 500;
+}
+.gist-status-value--idle {
+  color: var(--text-muted);
+}
+.gist-status-value--syncing {
+  color: var(--accent);
+}
+.gist-status-value--synced {
+  color: var(--success);
+}
+.gist-status-value--error {
+  color: var(--warning);
+}
+.gist-error-msg {
+  color: var(--warning);
+  background: var(--warning-bg);
+  border-radius: var(--radius);
+  padding: 8px 12px;
+}
+.gist-id-display {
+  background: var(--surface-2);
+  border-radius: var(--radius);
+  padding: 8px 12px;
+  color: var(--text-muted);
+  word-break: break-all;
+}
+.gist-hint {
+  color: var(--text-hint);
+}
+.gist-disconnect-btn {
+  font-family: inherit;
+  width: 100%;
+  margin-top: 4px;
+  padding: 8px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  background: none;
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    color 0.15s;
+}
+.gist-disconnect-btn:hover {
+  border-color: var(--warning);
+  color: var(--warning);
+}
+.gist-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.gist-label {
+  display: block;
+  color: var(--text-muted);
+}
+.gist-input {
+  font-family: inherit;
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s;
+}
+.gist-input:focus {
+  border-color: var(--accent);
+}
+.gist-input::placeholder {
+  color: var(--text-hint);
+}
+.gist-input-hint {
+  color: var(--text-hint);
+}
+.gist-connect-btn {
+  font-family: inherit;
+  width: 100%;
+  padding: 8px 16px;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: #fff;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.gist-connect-btn:hover {
+  opacity: 0.9;
+}
+.gist-connect-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 /* ── Week tabs ── */
 .week-tabs {
   height: 70px;
@@ -123,8 +327,8 @@ body {
 }
 .week-tab {
   flex-shrink: 0;
-  padding: 10px 20px;
-  font-size: 13px;
+  padding: 10px;
+  font-size: 16px;
   font-weight: 500;
   color: var(--text-muted);
   border: none;
@@ -149,10 +353,10 @@ body {
 }
 .week-tab .tab-label {
   display: block;
-  font-size: 11px;
   color: var(--text-hint);
   margin-top: 2px;
   font-weight: 400;
+  text-align: left;
 }
 .week-tab.active .tab-label {
   color: var(--accent-mid);
@@ -171,7 +375,6 @@ body {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  font-size: 12px;
   line-height: 1;
   color: var(--text-hint);
   cursor: pointer;
@@ -205,7 +408,6 @@ body {
   white-space: nowrap;
 }
 .week-tab-confirm-text {
-  font-size: 12px;
   font-weight: 500;
   color: var(--warning);
 }
@@ -213,27 +415,26 @@ body {
   display: flex;
   gap: 4px;
 }
-.week-tab-confirm-btn-ok {
-  font-size: 11px;
+.week-tab-confirm-btn-ok,
+.week-tab-confirm-btn-cancel {
+  font-size: 13px;
   padding: 2px 8px;
   border-radius: 4px;
+  cursor: pointer;
+}
+.week-tab-confirm-btn-ok {
   border: 1px solid var(--warning);
   background: var(--warning);
   color: #fff;
-  cursor: pointer;
   transition: opacity 0.15s;
 }
 .week-tab-confirm-btn-ok:hover {
   opacity: 0.85;
 }
 .week-tab-confirm-btn-cancel {
-  font-size: 11px;
-  padding: 2px 8px;
-  border-radius: 4px;
   border: 1px solid var(--border-strong);
   background: var(--surface);
   color: var(--text-muted);
-  cursor: pointer;
 }
 .week-tab-confirm-btn-cancel:hover {
   background: var(--surface-2);
@@ -247,7 +448,6 @@ body {
   gap: 5px;
   height: 32px;
   padding: 0 12px;
-  font-size: 12px;
   font-weight: 500;
   color: var(--text-hint);
   border: 1.5px dashed var(--border-strong);
@@ -268,7 +468,6 @@ body {
   background: var(--accent-bg);
 }
 .week-tab-add-icon {
-  font-size: 14px;
   line-height: 1;
 }
 
@@ -301,7 +500,7 @@ body {
   padding: 16px 20px;
 }
 .card-title {
-  font-size: 12px;
+  font-size: 16px;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.6px;
@@ -321,14 +520,12 @@ body {
   border-top: none;
 }
 .day-label {
-  font-size: 12px;
   font-weight: 600;
   color: var(--text-muted);
   padding-top: 2px;
   line-height: 1.4;
 }
 .day-label .day-date {
-  font-size: 11px;
   color: var(--text-hint);
   font-weight: 400;
 }
@@ -338,12 +535,145 @@ body {
   gap: 6px;
 }
 
+/* ── Daily Todo List ── */
+.daily-todo-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+.daily-todo-header {
+  height: 27px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.daily-todo-title {
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.daily-todo-add-btn {
+  font-family: inherit;
+  font-weight: 500;
+  color: var(--accent);
+  background: var(--accent-bg);
+  border: 1px solid var(--accent-mid);
+  border-radius: 20px;
+  padding: 2px 9px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.daily-todo-add-btn:hover {
+  opacity: 0.8;
+}
+.daily-todo-input-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+.daily-todo-input {
+  font-family: inherit;
+  flex: 1;
+  min-width: 0;
+  padding: 4px 8px;
+  border: 1px solid var(--accent-mid);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
+  outline: none;
+}
+.daily-todo-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-bg);
+}
+.daily-todo-confirm-btn {
+  font-family: inherit;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+}
+.daily-todo-confirm-btn:hover {
+  opacity: 0.85;
+}
+.daily-todo-cancel-btn {
+  font-family: inherit;
+  font-weight: 500;
+  padding: 3px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface-2);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+}
+.daily-todo-cancel-btn:hover {
+  opacity: 0.8;
+}
+.daily-todo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.daily-todo-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 7px;
+  line-height: 1.5;
+}
+.daily-todo-checkbox {
+  flex-shrink: 0;
+  margin-top: 3px;
+  width: 14px;
+  height: 14px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+.daily-todo-text {
+  flex: 1;
+  color: var(--text);
+}
+.daily-todo-text.done {
+  text-decoration: line-through;
+  color: var(--text-hint);
+}
+.daily-todo-delete-btn {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  color: var(--text-hint);
+  line-height: 1;
+  padding: 1px 3px;
+  cursor: pointer;
+  opacity: 0;
+  transition:
+    opacity 0.15s,
+    color 0.15s;
+  margin-top: 1px;
+}
+.daily-todo-item:hover .daily-todo-delete-btn {
+  opacity: 1;
+}
+.daily-todo-delete-btn:hover {
+  color: #d94040;
+}
+.daily-todo-empty {
+  color: var(--text-hint);
+}
+
 /* ── Task item ── */
 .task {
   display: flex;
   align-items: flex-start;
   gap: 8px;
-  font-size: 13px;
   line-height: 1.5;
   cursor: pointer;
 }
@@ -365,7 +695,7 @@ body {
   color: var(--text-hint);
 }
 .task-block {
-  font-size: 11px;
+  font-size: 13px;
   padding: 2px 7px;
   border-radius: 4px;
   font-weight: 500;
@@ -394,7 +724,6 @@ body {
   margin-bottom: 2px;
 }
 .min-win-label {
-  font-size: 11px;
   font-weight: 600;
   color: var(--warning);
   white-space: nowrap;
@@ -403,7 +732,6 @@ body {
 .min-win-input {
   flex: 1;
   font-family: inherit;
-  font-size: 13px;
   color: var(--text);
   background: transparent;
   border: none;
@@ -414,52 +742,119 @@ body {
   color: #c8a97a;
 }
 
-/* ── Time block ── */
-.time-block {
-  border-left: 3px solid var(--border-strong);
-  padding: 10px 14px;
-  border-radius: 0 var(--radius) var(--radius) 0;
-  margin-bottom: 8px;
+/* ── Weekly Milestones ── */
+/* ── Weekly Milestone card ── */
+.milestone-card {
+  transition:
+    background 0.3s,
+    border-color 0.3s;
 }
-.time-block.deep {
-  border-left-color: var(--accent-mid);
-  background: var(--accent-bg);
-}
-.time-block.output {
-  border-left-color: #3b6d11;
+.milestone-card.completed {
   background: var(--success-bg);
+  border-color: #b2d98a;
 }
-.time-block.review {
-  border-left-color: #854f0b;
-  background: var(--warning-bg);
+.milestone-header {
+  margin-bottom: 10px;
 }
-.time-block.lunch {
-  border-left-color: var(--border-strong);
-  background: var(--surface-2);
+.milestone-title-row {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  margin-bottom: 4px;
 }
-.tb-time {
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--text-muted);
-  letter-spacing: 0.3px;
-}
-.tb-label {
+.milestone-subtitle {
   font-size: 13px;
-  font-weight: 600;
-  color: var(--text);
-  margin: 2px 0 3px;
+  color: var(--text-hint);
 }
-.tb-desc {
-  font-size: 12px;
+.milestone-actions {
+  display: flex;
+  gap: 6px;
+  margin-left: auto;
+}
+.milestone-complete-btn {
+  font-family: inherit;
+  font-weight: 500;
+  color: var(--success);
+  background: var(--success-bg);
+  border: 1px solid #a8d070;
+  border-radius: 20px;
+  padding: 2px 10px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+}
+.milestone-complete-btn:hover {
+  opacity: 0.8;
+}
+.milestone-reset-btn {
+  font-family: inherit;
+  font-weight: 400;
+  color: var(--text-hint);
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2px 9px;
+  cursor: pointer;
+  transition:
+    color 0.15s,
+    border-color 0.15s;
+  white-space: nowrap;
+}
+.milestone-reset-btn:hover {
   color: var(--text-muted);
+  border-color: var(--border-strong);
+}
+.milestone-achieved {
+  font-weight: 600;
+  color: var(--success);
+  margin-bottom: 8px;
+  letter-spacing: 0.2px;
+}
+.milestone-text {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--text);
+  cursor: pointer;
   line-height: 1.5;
+  border-radius: 4px;
+  padding: 2px 4px;
+  margin: -2px -4px;
+  transition: background 0.12s;
+}
+.milestone-text:hover {
+  background: rgba(0, 0, 0, 0.04);
+}
+.milestone-card.completed .milestone-text {
+  cursor: default;
+  color: var(--success);
+}
+.milestone-placeholder {
+  color: var(--text-hint);
+  cursor: pointer;
+  padding: 4px 0;
+  transition: color 0.12s;
+}
+.milestone-placeholder:hover {
+  color: var(--text-muted);
+}
+.milestone-edit-input {
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 500;
+  width: 100%;
+  padding: 4px 6px;
+  border: 1px solid var(--accent-mid);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--text);
+  outline: none;
+  box-shadow: 0 0 0 2px var(--accent-bg);
 }
 
 /* ── Week note / journal ── */
 .journal-area {
   width: 100%;
   font-family: inherit;
-  font-size: 13px;
   line-height: 1.7;
   color: var(--text);
   background: var(--surface-2);
@@ -482,7 +877,6 @@ body {
 .vacation-input {
   width: 100%;
   font-family: inherit;
-  font-size: 13px;
   line-height: 1.7;
   color: var(--text);
   background: var(--surface-2);
@@ -506,7 +900,6 @@ body {
   align-items: center;
   padding: 8px 0;
   border-top: 1px solid var(--border);
-  font-size: 13px;
 }
 .sprint-metric:first-of-type {
   border-top: none;
@@ -516,8 +909,6 @@ body {
 }
 .sprint-select {
   width: 100px;
-  font-size: 12px;
-  text-align: center;
   border: 1px solid var(--border);
   border-radius: 6px;
   padding: 3px 8px;
@@ -543,7 +934,6 @@ body {
 .progress-label {
   display: flex;
   justify-content: space-between;
-  font-size: 11px;
   color: var(--text-hint);
   margin-top: 4px;
 }
@@ -555,7 +945,6 @@ body {
   gap: 5px;
 }
 .mini-cal-header {
-  font-size: 11px;
   font-weight: 600;
   color: var(--text-muted);
   letter-spacing: 0.4px;
@@ -571,7 +960,6 @@ body {
   flex: 1;
   height: 30px;
   border-radius: 5px;
-  font-size: 12px;
   font-weight: 500;
   display: flex;
   flex-direction: column;
@@ -589,7 +977,6 @@ body {
 .mini-cal-cell-label {
   height: 15px;
   color: var(--text-hint);
-  font-size: 11px;
   background: transparent;
   cursor: default;
   font-weight: 600;
@@ -647,7 +1034,6 @@ body {
 }
 .friction-add-btn {
   font-family: inherit;
-  font-size: 11px;
   font-weight: 500;
   color: var(--accent);
   background: var(--accent-bg);
@@ -691,7 +1077,6 @@ body {
 }
 .friction-date-input {
   font-family: inherit;
-  font-size: 12px;
   border: 1px solid var(--border);
   border-radius: 6px;
   padding: 3px 8px;
@@ -713,7 +1098,6 @@ body {
 }
 .friction-tag {
   font-family: inherit;
-  font-size: 11px;
   padding: 3px 9px;
   border-radius: 20px;
   border: 1px solid var(--border-strong);
@@ -742,7 +1126,6 @@ body {
 }
 .friction-submit-btn {
   font-family: inherit;
-  font-size: 12px;
   font-weight: 600;
   padding: 5px 14px;
   border-radius: 6px;
@@ -757,7 +1140,6 @@ body {
 }
 .friction-cancel-btn {
   font-family: inherit;
-  font-size: 12px;
   padding: 5px 12px;
   border-radius: 6px;
   border: 1px solid var(--border-strong);
@@ -776,7 +1158,6 @@ body {
   gap: 0;
 }
 .friction-empty {
-  font-size: 12px;
   color: var(--text-hint);
   line-height: 1.6;
   padding: 4px 0 2px;
@@ -800,12 +1181,10 @@ body {
   flex-shrink: 0;
 }
 .friction-entry-date {
-  font-size: 11px;
   font-weight: 600;
   color: var(--text-muted);
 }
 .friction-entry-slot {
-  font-size: 10px;
   color: var(--text-hint);
   line-height: 1.3;
 }
@@ -822,7 +1201,6 @@ body {
   gap: 4px;
 }
 .friction-tag-display {
-  font-size: 10px;
   padding: 2px 7px;
   border-radius: 20px;
   background: var(--accent-bg);
@@ -830,13 +1208,11 @@ body {
   font-weight: 500;
 }
 .friction-entry-note {
-  font-size: 11px;
   color: var(--text-hint);
   line-height: 1.5;
 }
 .friction-delete-btn {
   font-family: inherit;
-  font-size: 14px;
   line-height: 1;
   width: 18px;
   height: 18px;
@@ -870,7 +1246,6 @@ body {
   margin-bottom: 2px;
 }
 .friction-pattern-title {
-  font-size: 11px;
   font-weight: 600;
   color: var(--text-hint);
   text-transform: uppercase;
@@ -884,7 +1259,6 @@ body {
   margin-bottom: 5px;
 }
 .friction-pattern-label {
-  font-size: 11px;
   color: var(--text-muted);
   width: 120px;
   flex-shrink: 0;
@@ -907,7 +1281,6 @@ body {
   min-width: 8px;
 }
 .friction-pattern-count {
-  font-size: 11px;
   font-weight: 600;
   color: var(--text-muted);
   width: 16px;
@@ -925,7 +1298,6 @@ body {
 .life-list-text {
   flex: 1;
   font-family: inherit;
-  font-size: 13px;
   background: transparent;
   border: none;
   outline: none;

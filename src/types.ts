@@ -24,6 +24,17 @@ export interface FrictionEntry {
   note: string;
 }
 
+export interface DailyTodoEntry {
+  id: string;
+  text: string;
+  checked: boolean;
+}
+
+export interface SprintMilestone {
+  text: string;
+  completed: boolean;
+}
+
 export interface PlannerState {
   checkboxes: Record<string, boolean>;
   textAreas: Record<string, string>;

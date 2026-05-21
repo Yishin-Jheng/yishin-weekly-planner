@@ -1,5 +1,7 @@
 import Task from "../Task";
 import MiniCalendar from "../MiniCalendar";
+import DailyTodoList from "../DailyTodoList";
+import type { DailyTodoEntry } from "../../types";
 
 // Sprint 0：2026/5/18–5/22
 const SPRINT0_DAYS_ISO = [
@@ -19,6 +21,10 @@ interface Props {
   onSelect: (key: string, index: number) => void;
   checkedDates: string[];
   onToggle: (date: string) => void;
+  dailyTodos: Record<string, DailyTodoEntry[]>;
+  onAddDailyTodo: (dayKey: string, text: string) => void;
+  onToggleDailyTodo: (dayKey: string, id: string, checked: boolean) => void;
+  onDeleteDailyTodo: (dayKey: string, id: string) => void;
 }
 
 export default function Sprint0Panel({
@@ -30,6 +36,10 @@ export default function Sprint0Panel({
   onSelect,
   checkedDates,
   onToggle,
+  dailyTodos,
+  onAddDailyTodo,
+  onToggleDailyTodo,
+  onDeleteDailyTodo,
 }: Props) {
   const cb = (key: string) => checkboxes[key] ?? false;
   const ta = (key: string) => textAreas[key] ?? "";
@@ -40,9 +50,7 @@ export default function Sprint0Panel({
       {/* ── 左欄：每日任務 ── */}
       <div className="schedule-col">
         <div className="card">
-          <div className="card-title">
-            Sprint 0 暖機週 — 每天 4 小時（10–12 / 14–16）
-          </div>
+          <div className="card-title">本週每日待辦（5/18-5/22）</div>
 
           {/* 週一 5/18 */}
           <div className="day-row">
@@ -121,6 +129,7 @@ export default function Sprint0Panel({
               <Task
                 stateKey="s0_wed_0"
                 checked={cb("s0_wed_0")}
+                disabled={true}
                 onChange={onCheckbox}
               >
                 <span className="task-block tag-am">上午</span>
@@ -129,6 +138,7 @@ export default function Sprint0Panel({
               <Task
                 stateKey="s0_wed_1"
                 checked={cb("s0_wed_1")}
+                disabled={true}
                 onChange={onCheckbox}
               >
                 <span className="task-block tag-pm">下午</span> 把週二完成的 FM
@@ -144,22 +154,14 @@ export default function Sprint0Panel({
               <div className="day-date">5/21</div>
             </div>
             <div className="day-tasks">
-              <Task
-                stateKey="s0_thu_0"
-                checked={cb("s0_thu_0")}
-                onChange={onCheckbox}
-              >
-                <span className="task-block tag-am">上午</span>
-                針對週二提出的「改進點」，嘗試寫寫看一小段 Refactor
-              </Task>
-              <Task
-                stateKey="s0_thu_1"
-                checked={cb("s0_thu_1")}
-                onChange={onCheckbox}
-              >
-                <span className="task-block tag-pm">下午</span>
-                實做第二個 Newbie 題目，從一開始就用 TS 建檔
-              </Task>
+              <DailyTodoList
+                entries={dailyTodos["s0_thu"] ?? []}
+                onAdd={(text) => onAddDailyTodo("s0_thu", text)}
+                onToggle={(id, checked) =>
+                  onToggleDailyTodo("s0_thu", id, checked)
+                }
+                onDelete={(id) => onDeleteDailyTodo("s0_thu", id)}
+              />
             </div>
           </div>
 
@@ -170,29 +172,14 @@ export default function Sprint0Panel({
               <div className="day-date">5/22</div>
             </div>
             <div className="day-tasks">
-              <Task
-                stateKey="s0_fri_0"
-                checked={cb("s0_fri_0")}
-                onChange={onCheckbox}
-              >
-                <span className="task-block tag-am">上午</span>
-                確認下週一課程章節，寫下來貼桌邊
-              </Task>
-              <Task
-                stateKey="s0_fri_1"
-                checked={cb("s0_fri_1")}
-                onChange={onCheckbox}
-              >
-                <span className="task-block tag-pm">下午</span>
-                填寫本週回顧週記（對 TS 的陌生感是否更低了？）
-              </Task>
-              <Task
-                stateKey="s0_fri_2"
-                checked={cb("s0_fri_2")}
-                onChange={onCheckbox}
-              >
-                15:30 提早收工 🎉
-              </Task>
+              <DailyTodoList
+                entries={dailyTodos["s0_fri"] ?? []}
+                onAdd={(text) => onAddDailyTodo("s0_fri", text)}
+                onToggle={(id, checked) =>
+                  onToggleDailyTodo("s0_fri", id, checked)
+                }
+                onDelete={(id) => onDeleteDailyTodo("s0_fri", id)}
+              />
             </div>
           </div>
         </div>
@@ -215,7 +202,7 @@ export default function Sprint0Panel({
           <div className="card-title">Sprint 0 週記</div>
           <textarea
             className="journal-area"
-            placeholder="這週的節奏感如何？TS 有沒有變得不那麼陌生？"
+            placeholder="這週的節奏感如何？TypeScript 有沒有變得不那麼陌生？"
             value={ta("journal-sprint0")}
             onChange={(e) => onTextarea("journal-sprint0", e.target.value)}
           />
@@ -224,7 +211,7 @@ export default function Sprint0Panel({
         <div className="card">
           <div className="card-title">Sprint Review（5/22）</div>
           <div className="sprint-metric">
-            <label>TS 陌生感</label>
+            <label>對 TypeScript 的陌生感</label>
             <select
               className="sprint-select"
               value={sel("s0_ts_feel")}
@@ -237,24 +224,12 @@ export default function Sprint0Panel({
             </select>
           </div>
           <div className="sprint-metric">
-            <label>下週進入 6 小時模式？</label>
-            <select
-              className="sprint-select"
-              value={sel("s0_ready")}
-              onChange={(e) => onSelect("s0_ready", Number(e.target.value))}
-            >
-              <option value={0}>— 評估 —</option>
-              <option value={1}>✅ 可以</option>
-              <option value={2}>⚠️ 再觀察一週</option>
-            </select>
-          </div>
-          <div className="sprint-metric">
-            <label>本週亮點</label>
+            <label>本週印象深刻的事</label>
           </div>
           <textarea
             className="journal-area"
             style={{ minHeight: 60 }}
-            placeholder="環境配置完畢、克服 TS 恐懼等等"
+            placeholder="環境配置完畢、克服對 TypeScript 的恐懼等等"
             value={ta("review-sprint0")}
             onChange={(e) => onTextarea("review-sprint0", e.target.value)}
           />
