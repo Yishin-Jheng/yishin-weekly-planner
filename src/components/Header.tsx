@@ -2,14 +2,14 @@ import type { SyncStatus } from "./GistSettings";
 
 const statusIcon: Record<SyncStatus, string> = {
   idle: "☁️",
-  syncing: "🔄",
+  syncing: "🗘",
   error: "⚠️",
   synced: "✅",
 };
 
 const statusTitle: Record<SyncStatus, string> = {
   idle: "尚未設定 Gist 同步",
-  syncing: "同步中...",
+  syncing: "正在同步中...",
   synced: "已同步至 Gist",
   error: "同步失敗，點擊查看",
 };
