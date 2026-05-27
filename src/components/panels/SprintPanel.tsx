@@ -1,4 +1,9 @@
-import type { SprintConfig, FrictionEntry, SprintMilestone, DailyTodoEntry } from "../../types";
+import type {
+  SprintConfig,
+  FrictionEntry,
+  SprintMilestone,
+  DailyTodoEntry,
+} from "../../types";
 import MiniCalendar from "../MiniCalendar";
 import MinWinBadge from "../MinWinBadge";
 import FrictionLog from "../FrictionLog";
@@ -99,8 +104,12 @@ export default function SprintPanel({
                 <DailyTodoList
                   entries={dailyTodos[`${id}_d${di}`] ?? []}
                   onAdd={(text) => onAddDailyTodo(`${id}_d${di}`, text)}
-                  onToggle={(todoId, checked) => onToggleDailyTodo(`${id}_d${di}`, todoId, checked)}
-                  onDelete={(todoId) => onDeleteDailyTodo(`${id}_d${di}`, todoId)}
+                  onToggle={(todoId, checked) =>
+                    onToggleDailyTodo(`${id}_d${di}`, todoId, checked)
+                  }
+                  onDelete={(todoId) =>
+                    onDeleteDailyTodo(`${id}_d${di}`, todoId)
+                  }
                 />
               </div>
             </div>
@@ -142,7 +151,7 @@ export default function SprintPanel({
           <FrictionPatternSummary entries={frictionEntries} />
 
           <div className="sprint-metric">
-            <label>與前兩週相比</label>
+            <label>與前一週相比</label>
             <select
               className="sprint-select"
               value={sel(progressSelectKey)}
