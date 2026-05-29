@@ -115,6 +115,16 @@ export default function SprintPanel({
             </div>
           ))}
         </div>
+
+        <div className="card">
+          <div className="card-title">{journalTitle}</div>
+          <textarea
+            className="journal-area"
+            placeholder={journalPlaceholder}
+            value={ta(journalId)}
+            onChange={(e) => onTextarea(journalId, e.target.value)}
+          />
+        </div>
       </div>
 
       {/* ── 右欄 ── */}
@@ -127,16 +137,6 @@ export default function SprintPanel({
             sprintDates={config.daysIso}
             checkedDates={checkedDates}
             onToggle={onToggle}
-          />
-        </div>
-
-        <div className="card">
-          <div className="card-title">{journalTitle}</div>
-          <textarea
-            className="journal-area"
-            placeholder={journalPlaceholder}
-            value={ta(journalId)}
-            onChange={(e) => onTextarea(journalId, e.target.value)}
           />
         </div>
 

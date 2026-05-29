@@ -47,7 +47,7 @@ export default function Sprint0Panel({
 
   return (
     <>
-      {/* ── 左欄：每日任務 ── */}
+      {/* ── 左欄：每日任務 + 週記 ── */}
       <div className="schedule-col">
         <div className="card">
           <div className="card-title">本週每日待辦（5/18-5/22）</div>
@@ -183,9 +183,19 @@ export default function Sprint0Panel({
             </div>
           </div>
         </div>
+
+        <div className="card">
+          <div className="card-title">Sprint 0 週記</div>
+          <textarea
+            className="journal-area"
+            placeholder="這週的節奏感如何？TypeScript 有沒有變得不那麼陌生？"
+            value={ta("journal-sprint0")}
+            onChange={(e) => onTextarea("journal-sprint0", e.target.value)}
+          />
+        </div>
       </div>
 
-      {/* ── 右欄：週記 + Sprint Review ── */}
+      {/* ── 右欄：學習打卡 + Sprint Review ── */}
       <div className="sidebar-col">
         <div className="card">
           <div className="card-title">學習打卡</div>
@@ -195,16 +205,6 @@ export default function Sprint0Panel({
             sprintDates={SPRINT0_DAYS_ISO}
             checkedDates={checkedDates}
             onToggle={onToggle}
-          />
-        </div>
-
-        <div className="card">
-          <div className="card-title">Sprint 0 週記</div>
-          <textarea
-            className="journal-area"
-            placeholder="這週的節奏感如何？TypeScript 有沒有變得不那麼陌生？"
-            value={ta("journal-sprint0")}
-            onChange={(e) => onTextarea("journal-sprint0", e.target.value)}
           />
         </div>
 
