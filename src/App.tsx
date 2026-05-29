@@ -318,7 +318,18 @@ export default function App() {
       setMilestones((prev) => {
         const current = prev[sprintId];
         if (!current) return prev;
-        return { ...prev, [sprintId]: { ...current, completed: true } };
+        return { ...prev, [sprintId]: { ...current, completed: true, deferred: false } };
+      });
+    },
+    [],
+  );
+
+  const deferMilestone = useCallback(
+    (sprintId: string) => {
+      setMilestones((prev) => {
+        const current = prev[sprintId];
+        if (!current) return prev;
+        return { ...prev, [sprintId]: { ...current, deferred: true, completed: false } };
       });
     },
     [],
@@ -486,6 +497,7 @@ export default function App() {
             milestone={milestones[activeSprint.id] ?? null}
             onSetMilestone={(text) => setMilestone(activeSprint.id, text)}
             onCompleteMilestone={() => completeMilestone(activeSprint.id)}
+            onDeferMilestone={() => deferMilestone(activeSprint.id)}
             onResetMilestone={() => resetMilestone(activeSprint.id)}
             dailyTodos={dailyTodos}
             onAddDailyTodo={addDailyTodo}

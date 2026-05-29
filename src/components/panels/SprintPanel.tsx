@@ -29,6 +29,7 @@ interface Props {
   milestone: SprintMilestone | null;
   onSetMilestone: (text: string) => void;
   onCompleteMilestone: () => void;
+  onDeferMilestone: () => void;
   onResetMilestone: () => void;
   dailyTodos: Record<string, DailyTodoEntry[]>;
   onAddDailyTodo: (dayKey: string, text: string) => void;
@@ -52,6 +53,7 @@ export default function SprintPanel({
   milestone,
   onSetMilestone,
   onCompleteMilestone,
+  onDeferMilestone,
   onResetMilestone,
   dailyTodos,
   onAddDailyTodo,
@@ -85,6 +87,7 @@ export default function SprintPanel({
           milestone={milestone}
           onSet={onSetMilestone}
           onComplete={onCompleteMilestone}
+          onDefer={onDeferMilestone}
           onReset={onResetMilestone}
         />
 

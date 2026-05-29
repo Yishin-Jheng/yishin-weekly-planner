@@ -745,6 +745,9 @@ body {
 /* ── Weekly Milestones ── */
 /* ── Weekly Milestone card ── */
 .milestone-card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   transition:
     background 0.3s,
     border-color 0.3s;
@@ -753,14 +756,14 @@ body {
   background: var(--success-bg);
   border-color: #b2d98a;
 }
-.milestone-header {
-  margin-bottom: 10px;
+.milestone-card.deferred {
+  background: #fef8ec;
+  border-color: #f0c060;
 }
 .milestone-title-row {
   display: flex;
   gap: 5px;
   align-items: center;
-  margin-bottom: 4px;
 }
 .milestone-subtitle {
   font-size: 13px;
@@ -786,6 +789,21 @@ body {
 .milestone-complete-btn:hover {
   opacity: 0.8;
 }
+.milestone-defer-btn {
+  font-family: inherit;
+  font-weight: 500;
+  color: #a06800;
+  background: #fef3d0;
+  border: 1px solid #f0c060;
+  border-radius: 20px;
+  padding: 2px 10px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+}
+.milestone-defer-btn:hover {
+  opacity: 0.8;
+}
 .milestone-reset-btn {
   font-family: inherit;
   font-weight: 400;
@@ -807,7 +825,11 @@ body {
 .milestone-achieved {
   font-weight: 600;
   color: var(--success);
-  margin-bottom: 8px;
+  letter-spacing: 0.2px;
+}
+.milestone-deferred-label {
+  font-weight: 600;
+  color: #a06800;
   letter-spacing: 0.2px;
 }
 .milestone-text {
@@ -818,7 +840,6 @@ body {
   line-height: 1.5;
   border-radius: 4px;
   padding: 2px 4px;
-  margin: -2px -4px;
   transition: background 0.12s;
 }
 .milestone-text:hover {
@@ -827,6 +848,10 @@ body {
 .milestone-card.completed .milestone-text {
   cursor: default;
   color: var(--success);
+}
+.milestone-card.deferred .milestone-text {
+  cursor: default;
+  color: #a06800;
 }
 .milestone-placeholder {
   color: var(--text-hint);
@@ -862,7 +887,7 @@ body {
   border-radius: var(--radius);
   padding: 10px 12px;
   resize: vertical;
-  min-height: 100px;
+  field-sizing: content;
   outline: none;
   transition: border-color 0.15s;
 }

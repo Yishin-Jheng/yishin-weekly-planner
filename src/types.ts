@@ -33,6 +33,7 @@ export interface DailyTodoEntry {
 export interface SprintMilestone {
   text: string;
   completed: boolean;
+  deferred?: boolean;
 }
 
 export interface PlannerState {

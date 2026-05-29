@@ -147,90 +147,6 @@ export default function RestWeekPanel({
             </div>
           </div>
 
-          {/* 這週的生活清單 */}
-          {/* <div
-            style={{
-              borderTop: "1px solid var(--border)",
-              paddingTop: 12,
-              marginTop: 4,
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                marginBottom: 10,
-              }}
-            >
-              <div className="card-title" style={{ marginBottom: 0 }}>
-                這週其他想做的事
-              </div>
-              <button className="friction-add-btn" onClick={addLifeItem}>
-                ＋ 新增
-              </button>
-            </div>
-
-            {lifeList.length === 0 ? (
-              <div
-                style={{
-                  fontSize: 12,
-                  color: "var(--text-hint)",
-                  lineHeight: 1.6,
-                  padding: "4px 0 8px",
-                }}
-              >
-                這週想去哪裡？想做什麼？隨手記下來。
-              </div>
-            ) : (
-              <div
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 6,
-                  paddingBottom: 4,
-                }}
-              >
-                {lifeList.map((item) => (
-                  <div key={item.id} className="life-list-item">
-                    <input
-                      type="checkbox"
-                      checked={item.checked}
-                      onChange={() => toggleLifeItem(item.id)}
-                      style={{
-                        flexShrink: 0,
-                        width: 14,
-                        height: 14,
-                        accentColor: "var(--accent)",
-                        cursor: "pointer",
-                      }}
-                    />
-                    <input
-                      type="text"
-                      className="life-list-text"
-                      value={item.text}
-                      onChange={(e) => updateLifeItem(item.id, e.target.value)}
-                      placeholder="想去的地方、想做的事、想見的人⋯⋯"
-                      style={{
-                        textDecoration: item.checked ? "line-through" : "none",
-                        color: item.checked
-                          ? "var(--text-hint)"
-                          : "var(--text)",
-                      }}
-                    />
-                    <button
-                      className="life-list-delete"
-                      onClick={() => deleteLifeItem(item.id)}
-                      title="刪除"
-                    >
-                      ×
-                    </button>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div> */}
-
           {/* 週五任務 */}
           <div className="day-row">
             <div className="day-label">
@@ -274,7 +190,7 @@ export default function RestWeekPanel({
             </div>
             <textarea
               className="journal-area"
-              style={{ height: 200, minHeight: 200 }}
+              style={{ fieldSizing: "content" }}
               placeholder="感謝？遺憾？委屈？解脫？都可以寫。這裡只有你會看到。"
               value={textAreas["vacation-week-farewell"] ?? ""}
               onChange={(e) =>
