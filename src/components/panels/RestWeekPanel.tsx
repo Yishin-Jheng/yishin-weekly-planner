@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Task from "../Task";
 
 interface Props {
@@ -6,22 +6,6 @@ interface Props {
   textAreas: Record<string, string>;
   onCheckbox: (key: string, checked: boolean) => void;
   onTextarea: (key: string, value: string) => void;
-}
-
-interface LifeItem {
-  id: string;
-  text: string;
-  checked: boolean;
-}
-
-const LIFE_LIST_KEY = "vacation-week-life-list";
-
-function loadLifeList(): LifeItem[] {
-  try {
-    const raw = localStorage.getItem(LIFE_LIST_KEY);
-    if (raw) return JSON.parse(raw);
-  } catch {}
-  return [];
 }
 
 const baselineQuestions = [
@@ -76,43 +60,6 @@ export default function RestWeekPanel({
   onTextarea,
 }: Props) {
   const cb = (key: string) => checkboxes[key] ?? false;
-
-  const [lifeList, setLifeList] = useState<LifeItem[]>(loadLifeList);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem(LIFE_LIST_KEY, JSON.stringify(lifeList));
-    } catch {}
-  }, [lifeList]);
-
-  const addLifeItem = () => {
-    setLifeList((prev) => [
-      ...prev,
-      {
-        id: `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
-        text: "",
-        checked: false,
-      },
-    ]);
-  };
-
-  const updateLifeItem = (id: string, text: string) => {
-    setLifeList((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, text } : item)),
-    );
-  };
-
-  const toggleLifeItem = (id: string) => {
-    setLifeList((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, checked: !item.checked } : item,
-      ),
-    );
-  };
-
-  const deleteLifeItem = (id: string) => {
-    setLifeList((prev) => prev.filter((item) => item.id !== id));
-  };
 
   // 手風琴 state：三個問題各自獨立
   const [accordionOpen, setAccordionOpen] = useState([false, false, false]);
@@ -278,7 +225,6 @@ export default function RestWeekPanel({
                     <div className="accordion-inner">
                       <textarea
                         className="journal-area"
-                        style={{ height: 72, minHeight: 72 }}
                         placeholder={q.placeholder}
                         value={textAreas[q.key] ?? ""}
                         onChange={(e) => onTextarea(q.key, e.target.value)}
