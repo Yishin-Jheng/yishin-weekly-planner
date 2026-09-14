@@ -104,7 +104,7 @@ export default function FrictionLog({ entries, onAdd, onDelete }: Props) {
           <textarea
             className="journal-area"
             style={{ minHeight: 56 }}
-            placeholder="有什麼想補充的嗎？例如：剛吃完飯特別想睡，下次試試吃少一點"
+            placeholder="做了些什麼？以及剛剛想拖延、不想做、或分心的那一當下，腦中第一個念頭又是什麼呢？"
             value={note}
             onChange={(e) => setNote(e.target.value)}
           />

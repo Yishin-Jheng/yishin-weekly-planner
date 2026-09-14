@@ -1,7 +1,18 @@
 import { useState, useCallback, useEffect, useRef } from "react";
-import type { WeekId, PlannerState, FrictionEntry, DailyTodoEntry, SprintMilestone } from "./types";
+import type {
+  WeekId,
+  PlannerState,
+  FrictionEntry,
+  DailyTodoEntry,
+  SprintMilestone,
+} from "./types";
 import { buildSprintConfig, getSprintDateRange } from "./utils/sprintDates";
-import { fetchFromGist, saveToGist, GIST_TOKEN_KEY, GIST_ID_KEY } from "./utils/gistSync";
+import {
+  fetchFromGist,
+  saveToGist,
+  GIST_TOKEN_KEY,
+  GIST_ID_KEY,
+} from "./utils/gistSync";
 import type { GistData } from "./utils/gistSync";
 import Header from "./components/Header";
 import WeekTabs from "./components/WeekTabs";
@@ -97,7 +108,10 @@ function loadMilestones(): Record<string, SprintMilestone> {
 }
 
 export default function App() {
-  const [activeWeek, setActiveWeek] = useState<WeekId>("rest");
+  const [activeWeek, setActiveWeek] = useState<WeekId>(() => {
+    const { sprints } = loadState();
+    return sprints.length > 0 ? `sprint${Math.max(...sprints)}` : "sprint0";
+  });
   const [state, setState] = useState<PlannerState>(loadState);
   const [checkinLog, setCheckinLog] =
     useState<Record<string, boolean>>(loadCheckinLog);
@@ -109,8 +123,12 @@ export default function App() {
     useState<Record<string, SprintMilestone>>(loadMilestones);
 
   // Gist 同步相關狀態
-  const [gistToken, setGistToken] = useState(() => localStorage.getItem(GIST_TOKEN_KEY) ?? "");
-  const [gistId, setGistId] = useState(() => localStorage.getItem(GIST_ID_KEY) ?? "");
+  const [gistToken, setGistToken] = useState(
+    () => localStorage.getItem(GIST_TOKEN_KEY) ?? "",
+  );
+  const [gistId, setGistId] = useState(
+    () => localStorage.getItem(GIST_ID_KEY) ?? "",
+  );
   const [syncStatus, setSyncStatus] = useState<SyncStatus>("idle");
   const [syncError, setSyncError] = useState<string | null>(null);
   const [showSettings, setShowSettings] = useState(false);
@@ -135,7 +153,9 @@ export default function App() {
         setSyncStatus("synced");
         setSyncError(null);
         // 等 React 重新渲染後再解除跳過旗標
-        setTimeout(() => { skipNextSyncRef.current = false; }, 100);
+        setTimeout(() => {
+          skipNextSyncRef.current = false;
+        }, 100);
       })
       .catch((e) => {
         setSyncStatus("error");
@@ -146,23 +166,33 @@ export default function App() {
 
   // localStorage 同步
   useEffect(() => {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch {}
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    } catch {}
   }, [state]);
 
   useEffect(() => {
-    try { localStorage.setItem(CHECKIN_KEY, JSON.stringify(checkinLog)); } catch {}
+    try {
+      localStorage.setItem(CHECKIN_KEY, JSON.stringify(checkinLog));
+    } catch {}
   }, [checkinLog]);
 
   useEffect(() => {
-    try { localStorage.setItem(FRICTION_KEY, JSON.stringify(frictionLogs)); } catch {}
+    try {
+      localStorage.setItem(FRICTION_KEY, JSON.stringify(frictionLogs));
+    } catch {}
   }, [frictionLogs]);
 
   useEffect(() => {
-    try { localStorage.setItem(DAILY_TODOS_KEY, JSON.stringify(dailyTodos)); } catch {}
+    try {
+      localStorage.setItem(DAILY_TODOS_KEY, JSON.stringify(dailyTodos));
+    } catch {}
   }, [dailyTodos]);
 
   useEffect(() => {
-    try { localStorage.setItem(MILESTONES_KEY, JSON.stringify(milestones)); } catch {}
+    try {
+      localStorage.setItem(MILESTONES_KEY, JSON.stringify(milestones));
+    } catch {}
   }, [milestones]);
 
   // Gist 自動同步（3 秒 debounce）
@@ -191,16 +221,19 @@ export default function App() {
     return () => {
       clearTimeout(timer);
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state, checkinLog, frictionLogs, dailyTodos, milestones]);
 
-  const getCurrentData = useCallback((): GistData => ({
-    state,
-    checkinLog,
-    frictionLogs,
-    dailyTodos,
-    milestones,
-  }), [state, checkinLog, frictionLogs, dailyTodos, milestones]);
+  const getCurrentData = useCallback(
+    (): GistData => ({
+      state,
+      checkinLog,
+      frictionLogs,
+      dailyTodos,
+      milestones,
+    }),
+    [state, checkinLog, frictionLogs, dailyTodos, milestones],
+  );
 
   const handleGistConnect = useCallback((token: string, id: string) => {
     setGistToken(token);
@@ -224,7 +257,9 @@ export default function App() {
     setFrictionLogs(data.frictionLogs);
     setDailyTodos(data.dailyTodos);
     setMilestones(data.milestones);
-    setTimeout(() => { skipNextSyncRef.current = false; }, 100);
+    setTimeout(() => {
+      skipNextSyncRef.current = false;
+    }, 100);
   }, []);
 
   const onToggle = useCallback((date: string) => {
@@ -270,16 +305,13 @@ export default function App() {
     [],
   );
 
-  const addDailyTodo = useCallback(
-    (dayKey: string, text: string) => {
-      const id = `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
-      setDailyTodos((prev) => ({
-        ...prev,
-        [dayKey]: [...(prev[dayKey] ?? []), { id, text, checked: false }],
-      }));
-    },
-    [],
-  );
+  const addDailyTodo = useCallback((dayKey: string, text: string) => {
+    const id = `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+    setDailyTodos((prev) => ({
+      ...prev,
+      [dayKey]: [...(prev[dayKey] ?? []), { id, text, checked: false }],
+    }));
+  }, []);
 
   const toggleDailyTodo = useCallback(
     (dayKey: string, id: string, checked: boolean) => {
@@ -293,58 +325,49 @@ export default function App() {
     [],
   );
 
-  const deleteDailyTodo = useCallback(
-    (dayKey: string, id: string) => {
-      setDailyTodos((prev) => ({
+  const deleteDailyTodo = useCallback((dayKey: string, id: string) => {
+    setDailyTodos((prev) => ({
+      ...prev,
+      [dayKey]: (prev[dayKey] ?? []).filter((e) => e.id !== id),
+    }));
+  }, []);
+
+  const setMilestone = useCallback((sprintId: string, text: string) => {
+    setMilestones((prev) => ({
+      ...prev,
+      [sprintId]: { text, completed: false },
+    }));
+  }, []);
+
+  const completeMilestone = useCallback((sprintId: string) => {
+    setMilestones((prev) => {
+      const current = prev[sprintId];
+      if (!current) return prev;
+      return {
         ...prev,
-        [dayKey]: (prev[dayKey] ?? []).filter((e) => e.id !== id),
-      }));
-    },
-    [],
-  );
+        [sprintId]: { ...current, completed: true, deferred: false },
+      };
+    });
+  }, []);
 
-  const setMilestone = useCallback(
-    (sprintId: string, text: string) => {
-      setMilestones((prev) => ({
+  const deferMilestone = useCallback((sprintId: string) => {
+    setMilestones((prev) => {
+      const current = prev[sprintId];
+      if (!current) return prev;
+      return {
         ...prev,
-        [sprintId]: { text, completed: false },
-      }));
-    },
-    [],
-  );
+        [sprintId]: { ...current, deferred: true, completed: false },
+      };
+    });
+  }, []);
 
-  const completeMilestone = useCallback(
-    (sprintId: string) => {
-      setMilestones((prev) => {
-        const current = prev[sprintId];
-        if (!current) return prev;
-        return { ...prev, [sprintId]: { ...current, completed: true, deferred: false } };
-      });
-    },
-    [],
-  );
-
-  const deferMilestone = useCallback(
-    (sprintId: string) => {
-      setMilestones((prev) => {
-        const current = prev[sprintId];
-        if (!current) return prev;
-        return { ...prev, [sprintId]: { ...current, deferred: true, completed: false } };
-      });
-    },
-    [],
-  );
-
-  const resetMilestone = useCallback(
-    (sprintId: string) => {
-      setMilestones((prev) => {
-        const next = { ...prev };
-        delete next[sprintId];
-        return next;
-      });
-    },
-    [],
-  );
+  const resetMilestone = useCallback((sprintId: string) => {
+    setMilestones((prev) => {
+      const next = { ...prev };
+      delete next[sprintId];
+      return next;
+    });
+  }, []);
 
   const deleteFrictionEntry = useCallback(
     (sprintId: string, entryId: string) => {
@@ -372,7 +395,7 @@ export default function App() {
       label: `Sprint ${n}`,
       dateRange: getSprintDateRange(n),
     })),
-  ];
+  ].reverse();
 
   const deletableTabIds = new Set(
     allTabs.map((t) => t.id).filter((id) => id !== "rest" && id !== "sprint0"),
@@ -455,13 +478,15 @@ export default function App() {
   const checkInProps = { checkedDates, onToggle };
 
   return (
-    <>
+    <div className="app-shell">
       <div className="header">
         <Header
           syncStatus={syncStatus}
           gistConnected={!!gistToken && !!gistId}
           onOpenSettings={() => setShowSettings(true)}
         />
+      </div>
+      <div className="app-body">
         <WeekTabs
           tabs={allTabs}
           activeWeek={activeWeek}
@@ -471,42 +496,45 @@ export default function App() {
           deletableTabIds={deletableTabIds}
           onDeleteTab={deleteTab}
         />
+        <div className="main-scroller">
+          <div className="main">
+            {activeWeek === "rest" && <RestWeekPanel {...panelProps} />}
+            {activeWeek === "sprint0" && (
+              <Sprint0Panel
+                {...panelProps}
+                {...checkInProps}
+                dailyTodos={dailyTodos}
+                onAddDailyTodo={addDailyTodo}
+                onToggleDailyTodo={toggleDailyTodo}
+                onDeleteDailyTodo={deleteDailyTodo}
+              />
+            )}
+            {activeSprint && (
+              <SprintPanel
+                config={activeSprint}
+                {...panelProps}
+                {...checkInProps}
+                frictionEntries={frictionLogs[activeSprint.id] ?? []}
+                onAddFriction={(entry) =>
+                  addFrictionEntry(activeSprint.id, entry)
+                }
+                onDeleteFriction={(entryId) =>
+                  deleteFrictionEntry(activeSprint.id, entryId)
+                }
+                milestone={milestones[activeSprint.id] ?? null}
+                onSetMilestone={(text) => setMilestone(activeSprint.id, text)}
+                onCompleteMilestone={() => completeMilestone(activeSprint.id)}
+                onDeferMilestone={() => deferMilestone(activeSprint.id)}
+                onResetMilestone={() => resetMilestone(activeSprint.id)}
+                dailyTodos={dailyTodos}
+                onAddDailyTodo={addDailyTodo}
+                onToggleDailyTodo={toggleDailyTodo}
+                onDeleteDailyTodo={deleteDailyTodo}
+              />
+            )}
+          </div>
+        </div>
       </div>
-      <div className="main">
-        {activeWeek === "rest" && <RestWeekPanel {...panelProps} />}
-        {activeWeek === "sprint0" && (
-          <Sprint0Panel
-            {...panelProps}
-            {...checkInProps}
-            dailyTodos={dailyTodos}
-            onAddDailyTodo={addDailyTodo}
-            onToggleDailyTodo={toggleDailyTodo}
-            onDeleteDailyTodo={deleteDailyTodo}
-          />
-        )}
-        {activeSprint && (
-          <SprintPanel
-            config={activeSprint}
-            {...panelProps}
-            {...checkInProps}
-            frictionEntries={frictionLogs[activeSprint.id] ?? []}
-            onAddFriction={(entry) => addFrictionEntry(activeSprint.id, entry)}
-            onDeleteFriction={(entryId) =>
-              deleteFrictionEntry(activeSprint.id, entryId)
-            }
-            milestone={milestones[activeSprint.id] ?? null}
-            onSetMilestone={(text) => setMilestone(activeSprint.id, text)}
-            onCompleteMilestone={() => completeMilestone(activeSprint.id)}
-            onDeferMilestone={() => deferMilestone(activeSprint.id)}
-            onResetMilestone={() => resetMilestone(activeSprint.id)}
-            dailyTodos={dailyTodos}
-            onAddDailyTodo={addDailyTodo}
-            onToggleDailyTodo={toggleDailyTodo}
-            onDeleteDailyTodo={deleteDailyTodo}
-          />
-        )}
-      </div>
-
       {showSettings && (
         <GistSettings
           syncStatus={syncStatus}
@@ -520,6 +548,6 @@ export default function App() {
           onClose={() => setShowSettings(false)}
         />
       )}
-    </>
+    </div>
   );
 }
