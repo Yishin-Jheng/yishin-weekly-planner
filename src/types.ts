@@ -40,6 +40,14 @@ export interface PlannerState {
   checkboxes: Record<string, boolean>;
   textAreas: Record<string, string>;
   selects: Record<string, number>;
-  sprints: number[]; // 所有使用中的 sprint 編號，預設 [1, 2, 3, 4]
+  sprints: number[];
   minWins: Record<string, string>;
 }
+
+// 以字串為 key 的資料集合（key 可能是日期、sprint id 等）
+export type Dict<T> = Record<string, T>;
+
+export type CheckinLog = Dict<boolean>;
+export type FrictionLogs = Dict<FrictionEntry[]>;
+export type DailyTodos = Dict<DailyTodoEntry[]>;
+export type Milestones = Dict<SprintMilestone>;

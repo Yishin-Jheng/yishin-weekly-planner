@@ -2,7 +2,7 @@ import type {
   SprintConfig,
   FrictionEntry,
   SprintMilestone,
-  DailyTodoEntry,
+  DailyTodos,
 } from "../../types";
 import MiniCalendar from "../MiniCalendar";
 import MinWinBadge from "../MinWinBadge";
@@ -31,7 +31,7 @@ interface Props {
   onCompleteMilestone: () => void;
   onDeferMilestone: () => void;
   onResetMilestone: () => void;
-  dailyTodos: Record<string, DailyTodoEntry[]>;
+  dailyTodos: DailyTodos;
   onAddDailyTodo: (dayKey: string, text: string) => void;
   onToggleDailyTodo: (dayKey: string, id: string, checked: boolean) => void;
   onDeleteDailyTodo: (dayKey: string, id: string) => void;

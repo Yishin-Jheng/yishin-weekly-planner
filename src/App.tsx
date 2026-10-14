@@ -3,8 +3,10 @@ import type {
   WeekId,
   PlannerState,
   FrictionEntry,
-  DailyTodoEntry,
-  SprintMilestone,
+  CheckinLog,
+  FrictionLogs,
+  DailyTodos,
+  Milestones,
 } from "./types";
 import { buildSprintConfig, getSprintDateRange } from "./utils/sprintDates";
 import {
@@ -21,13 +23,19 @@ import Sprint0Panel from "./components/panels/Sprint0Panel";
 import SprintPanel from "./components/panels/SprintPanel";
 import GistSettings from "./components/GistSettings";
 import type { SyncStatus } from "./components/GistSettings";
-
-const STORAGE_KEY = "wendy_plan_v1";
-const CHECKIN_KEY = "checkin_log";
-const FRICTION_KEY = "wendy_friction_v1";
-const DAILY_TODOS_KEY = "wendy_daily_todos_v1";
-const MILESTONES_KEY = "wendy_milestones_v1";
-const DEFAULT_SPRINTS = [1, 2, 3, 4];
+import {
+  STORAGE_KEY,
+  CHECKIN_KEY,
+  FRICTION_KEY,
+  DAILY_TODOS_KEY,
+  MILESTONES_KEY,
+  loadState,
+  loadCheckinLog,
+  loadFrictionLogs,
+  loadDailyTodos,
+  loadMilestones,
+} from "./utils/storage";
+import { usePersistedState } from "./hooks/usePersistedState";
 
 // 放空週與 Sprint 0 為固定分頁，不參與動態管理
 const FIXED_TABS = [
@@ -35,92 +43,31 @@ const FIXED_TABS = [
   { id: "sprint0", label: "Sprint 0", dateRange: "5/18 – 5/22" },
 ];
 
-function loadState(): PlannerState {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw);
-
-      // 舊格式 migration（extraSprints + hiddenSprints → sprints）
-      if ("extraSprints" in parsed || "hiddenSprints" in parsed) {
-        const extra: number[] = parsed.extraSprints ?? [];
-        const hidden: string[] = parsed.hiddenSprints ?? [];
-        const sprints = [...DEFAULT_SPRINTS, ...extra].filter(
-          (n) => !hidden.includes(`sprint${n}`),
-        );
-        return {
-          checkboxes: parsed.checkboxes ?? {},
-          textAreas: parsed.textAreas ?? {},
-          selects: parsed.selects ?? {},
-          sprints,
-          minWins: parsed.minWins ?? {},
-        };
-      }
-
-      return {
-        checkboxes: parsed.checkboxes ?? {},
-        textAreas: parsed.textAreas ?? {},
-        selects: parsed.selects ?? {},
-        sprints: parsed.sprints ?? DEFAULT_SPRINTS,
-        minWins: parsed.minWins ?? {},
-      };
-    }
-  } catch {}
-  return {
-    checkboxes: {},
-    textAreas: {},
-    selects: {},
-    sprints: DEFAULT_SPRINTS,
-    minWins: {},
-  };
-}
-
-function loadFrictionLogs(): Record<string, FrictionEntry[]> {
-  try {
-    const raw = localStorage.getItem(FRICTION_KEY);
-    if (raw) return JSON.parse(raw);
-  } catch {}
-  return {};
-}
-
-function loadCheckinLog(): Record<string, boolean> {
-  try {
-    const raw = localStorage.getItem(CHECKIN_KEY);
-    if (raw) return JSON.parse(raw);
-  } catch {}
-  return {};
-}
-
-function loadDailyTodos(): Record<string, DailyTodoEntry[]> {
-  try {
-    const raw = localStorage.getItem(DAILY_TODOS_KEY);
-    if (raw) return JSON.parse(raw);
-  } catch {}
-  return {};
-}
-
-function loadMilestones(): Record<string, SprintMilestone> {
-  try {
-    const raw = localStorage.getItem(MILESTONES_KEY);
-    if (raw) return JSON.parse(raw);
-  } catch {}
-  return {};
-}
-
 export default function App() {
+  const [state, setState] = usePersistedState<PlannerState>(
+    STORAGE_KEY,
+    loadState,
+  );
+  const [checkinLog, setCheckinLog] = usePersistedState<CheckinLog>(
+    CHECKIN_KEY,
+    loadCheckinLog,
+  );
+  const [frictionLogs, setFrictionLogs] = usePersistedState<FrictionLogs>(
+    FRICTION_KEY,
+    loadFrictionLogs,
+  );
+  const [dailyTodos, setDailyTodos] = usePersistedState<DailyTodos>(
+    DAILY_TODOS_KEY,
+    loadDailyTodos,
+  );
+  const [milestones, setMilestones] = usePersistedState<Milestones>(
+    MILESTONES_KEY,
+    loadMilestones,
+  );
   const [activeWeek, setActiveWeek] = useState<WeekId>(() => {
-    const { sprints } = loadState();
+    const sprints = state.sprints;
     return sprints.length > 0 ? `sprint${Math.max(...sprints)}` : "sprint0";
   });
-  const [state, setState] = useState<PlannerState>(loadState);
-  const [checkinLog, setCheckinLog] =
-    useState<Record<string, boolean>>(loadCheckinLog);
-  const [frictionLogs, setFrictionLogs] =
-    useState<Record<string, FrictionEntry[]>>(loadFrictionLogs);
-  const [dailyTodos, setDailyTodos] =
-    useState<Record<string, DailyTodoEntry[]>>(loadDailyTodos);
-  const [milestones, setMilestones] =
-    useState<Record<string, SprintMilestone>>(loadMilestones);
 
   // Gist 同步相關狀態
   const [gistToken, setGistToken] = useState(
@@ -163,37 +110,6 @@ export default function App() {
         skipNextSyncRef.current = false;
       });
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // localStorage 同步
-  useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-    } catch {}
-  }, [state]);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem(CHECKIN_KEY, JSON.stringify(checkinLog));
-    } catch {}
-  }, [checkinLog]);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem(FRICTION_KEY, JSON.stringify(frictionLogs));
-    } catch {}
-  }, [frictionLogs]);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem(DAILY_TODOS_KEY, JSON.stringify(dailyTodos));
-    } catch {}
-  }, [dailyTodos]);
-
-  useEffect(() => {
-    try {
-      localStorage.setItem(MILESTONES_KEY, JSON.stringify(milestones));
-    } catch {}
-  }, [milestones]);
 
   // Gist 自動同步（3 秒 debounce）
   useEffect(() => {

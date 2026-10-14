@@ -1,8 +1,9 @@
 import type {
   PlannerState,
-  FrictionEntry,
-  DailyTodoEntry,
-  SprintMilestone,
+  CheckinLog,
+  FrictionLogs,
+  DailyTodos,
+  Milestones,
 } from "../types";
 
 export const GIST_TOKEN_KEY = "wendy_gist_token";
@@ -12,10 +13,10 @@ const GIST_FILENAME = "weekly-planner-data.json";
 
 export interface GistData {
   state: PlannerState;
-  checkinLog: Record<string, boolean>;
-  frictionLogs: Record<string, FrictionEntry[]>;
-  dailyTodos: Record<string, DailyTodoEntry[]>;
-  milestones: Record<string, SprintMilestone>;
+  checkinLog: CheckinLog;
+  frictionLogs: FrictionLogs;
+  dailyTodos: DailyTodos;
+  milestones: Milestones;
 }
 
 function headers(token: string) {

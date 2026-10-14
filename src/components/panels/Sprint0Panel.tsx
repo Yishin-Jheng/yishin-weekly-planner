@@ -1,7 +1,7 @@
 import Task from "../Task";
 import MiniCalendar from "../MiniCalendar";
 import DailyTodoList from "../DailyTodoList";
-import type { DailyTodoEntry } from "../../types";
+import type { DailyTodos } from "../../types";
 
 // Sprint 0：2026/5/18–5/22
 const SPRINT0_DAYS_ISO = [
@@ -21,7 +21,7 @@ interface Props {
   onSelect: (key: string, index: number) => void;
   checkedDates: string[];
   onToggle: (date: string) => void;
-  dailyTodos: Record<string, DailyTodoEntry[]>;
+  dailyTodos: DailyTodos;
   onAddDailyTodo: (dayKey: string, text: string) => void;
   onToggleDailyTodo: (dayKey: string, id: string, checked: boolean) => void;
   onDeleteDailyTodo: (dayKey: string, id: string) => void;
