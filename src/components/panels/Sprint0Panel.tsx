@@ -3,7 +3,6 @@ import MiniCalendar from "../MiniCalendar";
 import DailyTodoList from "../DailyTodoList";
 import type { DailyTodos } from "../../types";
 
-// Sprint 0：2026/5/18–5/22
 const SPRINT0_DAYS_ISO = [
   "2026-05-18",
   "2026-05-19",

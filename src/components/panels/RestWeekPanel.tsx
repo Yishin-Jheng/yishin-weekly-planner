@@ -59,9 +59,8 @@ export default function RestWeekPanel({
   onCheckbox,
   onTextarea,
 }: Props) {
-  const cb = (key: string) => checkboxes[key] ?? false;
+  const getIsChecked = (key: string) => checkboxes[key] ?? false;
 
-  // 手風琴 state：三個問題各自獨立
   const [accordionOpen, setAccordionOpen] = useState([false, false, false]);
 
   const toggleAccordion = (index: number) => {
@@ -85,7 +84,7 @@ export default function RestWeekPanel({
                 <Task
                   key={stateKey}
                   stateKey={stateKey}
-                  checked={cb(stateKey)}
+                  checked={getIsChecked(stateKey)}
                   onChange={onCheckbox}
                 >
                   {content}
@@ -105,7 +104,7 @@ export default function RestWeekPanel({
                 <Task
                   key={stateKey}
                   stateKey={stateKey}
-                  checked={cb(stateKey)}
+                  checked={getIsChecked(stateKey)}
                   disabled={true}
                   onChange={onCheckbox}
                 >
