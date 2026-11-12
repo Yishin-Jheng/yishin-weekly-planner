@@ -2,7 +2,7 @@ import type { SyncStatus } from "./GistSettings";
 
 const statusIcon: Record<SyncStatus, string> = {
   idle: "☁️",
-  syncing: "🗘",
+  syncing: "🔄",
   error: "⚠️",
   synced: "✅",
 };

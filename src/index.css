@@ -149,23 +149,12 @@ body {
 }
 .gist-sync-icon--syncing {
   color: var(--accent);
-  display: inline-block;
-  animation: gist-spin 1s linear infinite;
 }
 .gist-sync-icon--synced {
   color: var(--success);
 }
 .gist-sync-icon--error {
   color: var(--warning);
-}
-
-@keyframes gist-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
 
 /* ── Gist Settings Modal ── */
