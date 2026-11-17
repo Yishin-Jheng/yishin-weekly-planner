@@ -70,16 +70,18 @@ export default function RestWeekPanel({
   return (
     <>
       {/* ── 左欄 ── */}
-      <div className="schedule-col">
-        <div className="card">
-          <div className="card-title">本週任務</div>
+      <div className="flex flex-col gap-3">
+        <div className="rounded-lg border border-border bg-surface px-5 py-4">
+          <div className="mb-3.5 text-[16px] font-semibold tracking-[0.6px] text-text-muted uppercase">
+            本週任務
+          </div>
           {/* 整週任務 */}
-          <div className="day-row">
-            <div className="day-label">
+          <div className="grid grid-cols-[56px_1fr] gap-3 border-t border-border py-2.5 first:border-t-0">
+            <div className="pt-0.5 leading-[1.4] font-semibold text-text-muted">
               整週
-              <div className="day-date">5/6–5/14</div>
+              <div className="font-normal text-text-hint">5/6–5/14</div>
             </div>
-            <div className="day-tasks">
+            <div className="flex flex-col gap-1.5">
               {weeklyTodoList.map(({ content, stateKey }) => (
                 <Task
                   key={stateKey}
@@ -94,12 +96,12 @@ export default function RestWeekPanel({
           </div>
 
           {/* 週五任務 */}
-          <div className="day-row">
-            <div className="day-label">
+          <div className="grid grid-cols-[56px_1fr] gap-3 border-t border-border py-2.5 first:border-t-0">
+            <div className="pt-0.5 leading-[1.4] font-semibold text-text-muted">
               週五
-              <div className="day-date">5/15</div>
+              <div className="font-normal text-text-hint">5/15</div>
             </div>
-            <div className="day-tasks">
+            <div className="flex flex-col gap-1.5">
               {lastDayTodoList.map(({ content, stateKey }) => (
                 <Task
                   key={stateKey}
@@ -115,28 +117,14 @@ export default function RestWeekPanel({
           </div>
 
           {/* 離開這份工作 */}
-          <div
-            style={{
-              borderTop: "1px solid var(--border)",
-              marginTop: 8,
-              paddingTop: 16,
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 6,
-                marginBottom: 10,
-              }}
-            >
-              <div className="card-title" style={{ marginBottom: 0 }}>
+          <div className="mt-2 border-t border-border pt-4">
+            <div className="mb-2.5 flex items-center gap-1.5">
+              <div className="text-[16px] font-semibold tracking-[0.6px] text-text-muted uppercase">
                 離開這份工作，我想說的話
               </div>
             </div>
             <textarea
-              className="journal-area"
-              style={{ fieldSizing: "content" }}
+              className="w-full resize-y rounded-md border border-border bg-surface-2 px-3 py-2.5 leading-[1.7] text-text-base font-[inherit] field-sizing-content outline-none transition-[border-color] duration-150 ease-[ease] placeholder:text-text-hint focus:border-accent-mid"
               placeholder="感謝？遺憾？委屈？解脫？都可以寫。這裡只有你會看到。"
               value={textAreas["vacation-week-farewell"] ?? ""}
               onChange={(e) =>
@@ -148,19 +136,11 @@ export default function RestWeekPanel({
       </div>
 
       {/* ── 右欄 ── */}
-      <div className="sidebar-col">
-        <div className="card">
+      <div className="flex flex-col gap-3">
+        <div className="rounded-lg border border-border bg-surface px-5 py-4">
           {/* 出發點記錄 */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "baseline",
-              flexWrap: "wrap",
-              gap: "4px 8px",
-              marginBottom: 8,
-            }}
-          >
-            <div className="card-title" style={{ marginBottom: 0 }}>
+          <div className="mb-2 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+            <div className="text-[16px] font-semibold tracking-[0.6px] text-text-muted uppercase">
               出發點記錄
             </div>
           </div>
@@ -172,58 +152,34 @@ export default function RestWeekPanel({
               return (
                 <div
                   key={q.key}
-                  style={{
-                    borderTop: i === 0 ? "none" : "1px solid var(--border)",
-                  }}
+                  className={i === 0 ? "border-t-0" : "border-t border-border"}
                 >
                   <button
                     onClick={() => toggleAccordion(i)}
-                    className="accordion-trigger"
+                    className="flex w-full cursor-pointer items-center justify-between gap-2.5 border-0 bg-transparent py-2.5 text-left font-[inherit]"
                   >
-                    <div
-                      style={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 6,
-                        flex: 1,
-                        minWidth: 0,
-                      }}
-                    >
+                    <div className="flex min-w-0 flex-1 items-center gap-1.5">
                       {hasContent && (
-                        <span
-                          style={{
-                            display: "inline-block",
-                            width: 6,
-                            height: 6,
-                            borderRadius: "50%",
-                            background: "var(--accent)",
-                            flexShrink: 0,
-                          }}
-                        />
+                        <span className="inline-block size-1.5 shrink-0 rounded-full bg-accent" />
                       )}
-                      <span
-                        style={{
-                          fontSize: 12,
-                          color: "var(--text-muted)",
-                          lineHeight: 1.5,
-                        }}
-                      >
+                      <span className="text-[12px] leading-normal text-text-muted">
                         {q.label}
                       </span>
                     </div>
                     <span
-                      className="accordion-chevron"
-                      style={{
-                        transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
-                      }}
+                      className={`inline-block shrink-0 text-[20px] leading-5 text-text-hint transition-transform duration-200 ease-[ease] ${isOpen ? "rotate-180" : "rotate-0"}`}
                     >
                       ▾
                     </span>
                   </button>
-                  <div className={`accordion-body${isOpen ? " open" : ""}`}>
-                    <div className="accordion-inner">
+                  <div
+                    className={`grid transition-[grid-template-rows] duration-200 ease-[ease] ${isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
+                  >
+                    <div
+                      className={`overflow-hidden ${isOpen ? "pb-2.5" : "pb-0"}`}
+                    >
                       <textarea
-                        className="journal-area"
+                        className="w-full resize-y rounded-md border border-border bg-surface-2 px-3 py-2.5 leading-[1.7] text-text-base font-[inherit] field-sizing-content outline-none transition-[border-color] duration-150 ease-[ease] placeholder:text-text-hint focus:border-accent-mid"
                         placeholder={q.placeholder}
                         value={textAreas[q.key] ?? ""}
                         onChange={(e) => onTextarea(q.key, e.target.value)}

@@ -23,11 +23,13 @@ description: 將本專案指定 React 檔案的既有 CSS class 逐步轉成 Tai
 ## Utility 的選擇
 
 - 優先使用已有的語意 token，例如 bg-surface、border-border、text-text-muted，以當下 @theme 的定義為準。
+- 優先採用語意與效果相同的簡短 utility。若既有 utility 引用同一個 CSS 變數，例如 `rounded-lg` 與 `rounded-[var(--radius-lg)]`，使用前者；沒有對應 utility 時，可使用變數簡寫，例如 `rounded-(--radius)`。採納 lint 建議前，確認產出的宣告與變數引用一致，不只比較目前的像素值；對應關係不明確時，再查定義或編譯結果。
 - 尺寸能精確對應時使用標準 utility；否則可用 arbitrary value。不要為了採用預設級距而四捨五入原本尺寸。
 - 保留斷點的數值與邊界語意。例如 max-width: 700px 包含 700px，可用 [@media(max-width:700px)]:… 精確表達，不直接換成不同的預設斷點。
 - 動態狀態應在原條件下切換完整、可被 Tailwind 掃描的 utility 字串，不動態拼出 utility 名稱。
 - 保持 hover、disabled、完成或選取狀態等原有互動條件，不藉此變更業務邏輯。
-- 未要求時，不順便遷移 inline style 或修正原有版面問題；但有具體疑慮時皆可指出或提醒。
+- 若 inline style 與 utility class 僅為寫法差異，且沒有特殊用途，可在指定檔案內一併遷移；須保留相同的樣式效果與條件邏輯。若 inline style 承載任意執行期數值，或刻意利用 inline 宣告的優先順序等特殊用途，則保留並說明原因。
+- 未要求時，不順便修正原有版面問題；但有具體疑慮時皆可指出或提醒。
 
 ## Cascade 與保留的 CSS
 

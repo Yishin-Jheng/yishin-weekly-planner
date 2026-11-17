@@ -25,7 +25,7 @@
   --tag-fm-bg: #faece7;
   --sprint0: #185fa5;
   --sprint0-bg: #e6f1fb;
-  --radius: 8px;
+  --radius-md: 8px;
   --radius-lg: 12px;
 }
 
@@ -109,7 +109,7 @@ body {
   align-items: center;
   gap: 4px;
   padding: 4px 8px;
-  border-radius: var(--radius);
+  border-radius: var(--radius-md);
   border: 1px solid var(--border);
   font-family: inherit;
   color: var(--text-muted);
@@ -217,12 +217,12 @@ body {
 .gist-error-msg {
   color: var(--warning);
   background: var(--warning-bg);
-  border-radius: var(--radius);
+  border-radius: var(--radius-md);
   padding: 8px 12px;
 }
 .gist-id-display {
   background: var(--surface-2);
-  border-radius: var(--radius);
+  border-radius: var(--radius-md);
   padding: 8px 12px;
   color: var(--text-muted);
   word-break: break-all;
@@ -235,7 +235,7 @@ body {
   width: 100%;
   margin-top: 4px;
   padding: 8px 16px;
-  border-radius: var(--radius);
+  border-radius: var(--radius-md);
   border: 1px solid var(--border);
   color: var(--text-muted);
   background: none;
@@ -262,7 +262,7 @@ body {
   width: 100%;
   padding: 8px 12px;
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-md);
   background: var(--surface);
   color: var(--text);
   outline: none;
@@ -281,7 +281,7 @@ body {
   font-family: inherit;
   width: 100%;
   padding: 8px 16px;
-  border-radius: var(--radius);
+  border-radius: var(--radius-md);
   background: var(--accent);
   color: #fff;
   font-weight: 500;
@@ -325,7 +325,7 @@ body {
   border-left: 3px solid transparent;
   background: transparent;
   cursor: pointer;
-  border-radius: 0 var(--radius) var(--radius) 0;
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
   transition:
     color 0.15s,
     border-color 0.15s,
@@ -385,7 +385,7 @@ body {
   flex-direction: column;
   gap: 5px;
   padding: 10px 12px;
-  border-radius: var(--radius);
+  border-radius: var(--radius-md);
   background: var(--warning-bg);
   border: 1px solid #f8d090;
 }
@@ -436,7 +436,7 @@ body {
   border: 1.5px dashed var(--border-strong);
   background: transparent;
   cursor: pointer;
-  border-radius: var(--radius);
+  border-radius: var(--radius-md);
   margin-bottom: 6px;
   transition:
     color 0.15s,
@@ -692,7 +692,7 @@ body {
   gap: 8px;
   background: var(--warning-bg);
   border: 1px solid #f8d090;
-  border-radius: var(--radius);
+  border-radius: var(--radius-md);
   padding: 6px 10px;
   margin-bottom: 2px;
 }
@@ -857,7 +857,7 @@ body {
   color: var(--text);
   background: var(--surface-2);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-md);
   padding: 10px 12px;
   resize: vertical;
   field-sizing: content;
@@ -879,7 +879,7 @@ body {
   color: var(--text);
   background: var(--surface-2);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-md);
   padding: 8px 12px;
   outline: none;
   transition: border-color 0.15s;
@@ -1055,7 +1055,7 @@ body {
   padding: 12px;
   background: var(--surface-2);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--radius-md);
   margin-bottom: 12px;
   animation: frictionFadeIn 0.2s ease;
 }
@@ -1334,44 +1334,6 @@ body {
 .life-list-delete:hover {
   background: var(--border);
   color: var(--text);
-}
-
-/* ── Accordion（出發點記錄） ── */
-.accordion-trigger {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 0;
-  background: none;
-  border: none;
-  cursor: pointer;
-  gap: 10px;
-  text-align: left;
-  font-family: inherit;
-}
-.accordion-chevron {
-  font-size: 20px;
-  line-height: 20px;
-  color: var(--text-hint);
-  flex-shrink: 0;
-  display: inline-block;
-  transition: transform 200ms ease;
-}
-.accordion-body {
-  display: grid;
-  grid-template-rows: 0fr;
-  transition: grid-template-rows 200ms ease;
-}
-.accordion-body.open {
-  grid-template-rows: 1fr;
-}
-.accordion-inner {
-  overflow: hidden;
-  padding-bottom: 0;
-}
-.accordion-body.open .accordion-inner {
-  padding-bottom: 10px;
 }
 
 /* ── Responsive ── */
