@@ -1,28 +1,5 @@
 @import "tailwindcss";
 
-/*
-  @theme 將現有 CSS 變數橋接為 Tailwind design token。
-  新增的組件可使用 text-accent / bg-surface 等 utility class，
-  與下方 :root 指向同一個設計來源，無需雙重維護。
-*/
-@theme {
-  --color-bg: var(--bg);
-  --color-surface: var(--surface);
-  --color-surface-2: var(--surface-2);
-  --color-border: var(--border);
-  --color-border-strong: var(--border-strong);
-  --color-text-base: var(--text);
-  --color-text-muted: var(--text-muted);
-  --color-text-hint: var(--text-hint);
-  --color-accent: var(--accent);
-  --color-accent-bg: var(--accent-bg);
-  --color-accent-mid: var(--accent-mid);
-  --color-success: var(--success);
-  --color-success-bg: var(--success-bg);
-  --color-warning: var(--warning);
-  --color-warning-bg: var(--warning-bg);
-}
-
 /* ── Design tokens ── */
 :root {
   --bg: #f9f8f6;
@@ -52,11 +29,31 @@
   --radius-lg: 12px;
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-size: 14px;
+@theme {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-text-base: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-text-hint: var(--text-hint);
+  --color-accent: var(--accent);
+  --color-accent-bg: var(--accent-bg);
+  --color-accent-mid: var(--accent-mid);
+  --color-success: var(--success);
+  --color-success-bg: var(--success-bg);
+  --color-warning: var(--warning);
+  --color-warning-bg: var(--warning-bg);
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+  }
 }
 
 body {
@@ -72,25 +69,7 @@ body {
   padding: 0;
 }
 
-/* ── App shell ── */
-.app-shell {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-}
-.app-body {
-  display: flex;
-  flex: 1;
-  min-height: 0;
-}
-
 /* ── Header ── */
-.header {
-  flex-shrink: 0;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-  padding: 24px 32px 20px;
-}
 .header-top {
   display: flex;
   align-items: baseline;
@@ -475,20 +454,6 @@ body {
 }
 
 /* ── Main layout ── */
-.main-scroller {
-  width: calc(100vw - 200px);
-  padding: 35px;
-  overflow-y: auto;
-}
-.main {
-  width: fit-content;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: 800px 320px;
-  gap: 20px;
-  flex: 1;
-}
-
 .schedule-col {
   display: flex;
   flex-direction: column;
@@ -1411,13 +1376,6 @@ body {
 
 /* ── Responsive ── */
 @media (max-width: 700px) {
-  .main {
-    grid-template-columns: 1fr;
-    padding: 16px;
-  }
-  .header {
-    padding: 16px 16px 12px;
-  }
   .header-milestone {
     display: none;
   }

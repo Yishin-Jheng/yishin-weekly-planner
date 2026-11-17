@@ -394,15 +394,15 @@ export default function App() {
   const checkInProps = { checkedDates, onToggle };
 
   return (
-    <div className="app-shell">
-      <div className="header">
+    <div className="flex h-screen flex-col">
+      <div className="shrink-0 border-b border-border bg-surface px-8 pt-6 pb-5 [@media(max-width:700px)]:px-4 [@media(max-width:700px)]:pt-4 [@media(max-width:700px)]:pb-3">
         <Header
           syncStatus={syncStatus}
           gistConnected={!!gistToken && !!gistId}
           onOpenSettings={() => setShowSettings(true)}
         />
       </div>
-      <div className="app-body">
+      <div className="flex min-h-0 flex-1">
         <WeekTabs
           tabs={allTabs}
           activeWeek={activeWeek}
@@ -412,8 +412,8 @@ export default function App() {
           deletableTabIds={deletableTabIds}
           onDeleteTab={deleteTab}
         />
-        <div className="main-scroller">
-          <div className="main">
+        <div className="w-[calc(100vw-200px)] overflow-y-auto p-[35px]">
+          <div className="mx-auto grid w-fit flex-1 grid-cols-[800px_320px] gap-5 [@media(max-width:700px)]:grid-cols-[1fr] [@media(max-width:700px)]:p-4">
             {activeWeek === "rest" && <RestWeekPanel {...panelProps} />}
             {activeWeek === "sprint0" && (
               <Sprint0Panel
