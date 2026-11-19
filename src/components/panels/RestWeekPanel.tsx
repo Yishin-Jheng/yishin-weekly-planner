@@ -70,18 +70,18 @@ export default function RestWeekPanel({
   return (
     <>
       {/* ── 左欄 ── */}
-      <div className="flex flex-col gap-3">
-        <div className="rounded-lg border border-border bg-surface px-5 py-4">
-          <div className="mb-3.5 text-[16px] font-semibold tracking-[0.6px] text-text-muted uppercase">
+      <div className="flex flex-col gap-[12px]">
+        <div className="rounded-lg border border-border bg-surface px-[20px] py-[16px]">
+          <div className="mb-[14px] text-[16px] font-semibold tracking-[0.6px] text-text-muted uppercase">
             本週任務
           </div>
           {/* 整週任務 */}
-          <div className="grid grid-cols-[56px_1fr] gap-3 border-t border-border py-2.5 first:border-t-0">
-            <div className="pt-0.5 leading-[1.4] font-semibold text-text-muted">
+          <div className="grid grid-cols-[56px_1fr] gap-[12px] border-t border-border py-[10px] first:border-t-0">
+            <div className="pt-[2px] leading-[1.4] font-semibold text-text-muted">
               整週
               <div className="font-normal text-text-hint">5/6–5/14</div>
             </div>
-            <div className="flex flex-col gap-1.5">
+            <div className="flex flex-col gap-[6px]">
               {weeklyTodoList.map(({ content, stateKey }) => (
                 <Task
                   key={stateKey}
@@ -96,12 +96,12 @@ export default function RestWeekPanel({
           </div>
 
           {/* 週五任務 */}
-          <div className="grid grid-cols-[56px_1fr] gap-3 border-t border-border py-2.5 first:border-t-0">
-            <div className="pt-0.5 leading-[1.4] font-semibold text-text-muted">
+          <div className="grid grid-cols-[56px_1fr] gap-[12px] border-t border-border py-[10px] first:border-t-0">
+            <div className="pt-[2px] leading-[1.4] font-semibold text-text-muted">
               週五
               <div className="font-normal text-text-hint">5/15</div>
             </div>
-            <div className="flex flex-col gap-1.5">
+            <div className="flex flex-col gap-[6px]">
               {lastDayTodoList.map(({ content, stateKey }) => (
                 <Task
                   key={stateKey}
@@ -117,14 +117,14 @@ export default function RestWeekPanel({
           </div>
 
           {/* 離開這份工作 */}
-          <div className="mt-2 border-t border-border pt-4">
-            <div className="mb-2.5 flex items-center gap-1.5">
+          <div className="mt-[8px] border-t border-border pt-[16px]">
+            <div className="mb-[10px] flex items-center gap-[6px]">
               <div className="text-[16px] font-semibold tracking-[0.6px] text-text-muted uppercase">
                 離開這份工作，我想說的話
               </div>
             </div>
             <textarea
-              className="w-full resize-y rounded-md border border-border bg-surface-2 px-3 py-2.5 leading-[1.7] text-text-base font-[inherit] field-sizing-content outline-none transition-[border-color] duration-150 ease-[ease] placeholder:text-text-hint focus:border-accent-mid"
+              className="w-full resize-y rounded-md border border-border bg-surface-2 px-[12px] py-[10px] leading-[1.7] text-text-base font-[inherit] field-sizing-content outline-none transition-[border-color] duration-150 ease-[ease] placeholder:text-text-hint focus:border-accent-mid"
               placeholder="感謝？遺憾？委屈？解脫？都可以寫。這裡只有你會看到。"
               value={textAreas["vacation-week-farewell"] ?? ""}
               onChange={(e) =>
@@ -136,10 +136,10 @@ export default function RestWeekPanel({
       </div>
 
       {/* ── 右欄 ── */}
-      <div className="flex flex-col gap-3">
-        <div className="rounded-lg border border-border bg-surface px-5 py-4">
+      <div className="flex flex-col gap-[12px]">
+        <div className="rounded-lg border border-border bg-surface px-[20px] py-[16px]">
           {/* 出發點記錄 */}
-          <div className="mb-2 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+          <div className="mb-[8px] flex flex-wrap items-baseline gap-x-[8px] gap-y-[4px]">
             <div className="text-[16px] font-semibold tracking-[0.6px] text-text-muted uppercase">
               出發點記錄
             </div>
@@ -156,18 +156,18 @@ export default function RestWeekPanel({
                 >
                   <button
                     onClick={() => toggleAccordion(i)}
-                    className="flex w-full cursor-pointer items-center justify-between gap-2.5 border-0 bg-transparent py-2.5 text-left font-[inherit]"
+                    className="flex w-full cursor-pointer items-center justify-between gap-[10px] border-0 bg-transparent py-[10px] text-left font-[inherit]"
                   >
-                    <div className="flex min-w-0 flex-1 items-center gap-1.5">
+                    <div className="flex min-w-0 flex-1 items-center gap-[6px]">
                       {hasContent && (
-                        <span className="inline-block size-1.5 shrink-0 rounded-full bg-accent" />
+                        <span className="inline-block size-[6px] shrink-0 rounded-full bg-accent" />
                       )}
                       <span className="text-[12px] leading-normal text-text-muted">
                         {q.label}
                       </span>
                     </div>
                     <span
-                      className={`inline-block shrink-0 text-[20px] leading-5 text-text-hint transition-transform duration-200 ease-[ease] ${isOpen ? "rotate-180" : "rotate-0"}`}
+                      className={`inline-block shrink-0 text-[20px] leading-[20px] text-text-hint transition-transform duration-200 ease-[ease] ${isOpen ? "rotate-180" : "rotate-0"}`}
                     >
                       ▾
                     </span>
@@ -176,10 +176,10 @@ export default function RestWeekPanel({
                     className={`grid transition-[grid-template-rows] duration-200 ease-[ease] ${isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}
                   >
                     <div
-                      className={`overflow-hidden ${isOpen ? "pb-2.5" : "pb-0"}`}
+                      className={`overflow-hidden ${isOpen ? "pb-[10px]" : "pb-0"}`}
                     >
                       <textarea
-                        className="w-full resize-y rounded-md border border-border bg-surface-2 px-3 py-2.5 leading-[1.7] text-text-base font-[inherit] field-sizing-content outline-none transition-[border-color] duration-150 ease-[ease] placeholder:text-text-hint focus:border-accent-mid"
+                        className="w-full resize-y rounded-md border border-border bg-surface-2 px-[12px] py-[10px] leading-[1.7] text-text-base font-[inherit] field-sizing-content outline-none transition-[border-color] duration-150 ease-[ease] placeholder:text-text-hint focus:border-accent-mid"
                         placeholder={q.placeholder}
                         value={textAreas[q.key] ?? ""}
                         onChange={(e) => onTextarea(q.key, e.target.value)}

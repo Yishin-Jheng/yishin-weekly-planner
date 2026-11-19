@@ -23,8 +23,11 @@ description: 將本專案指定 React 檔案的既有 CSS class 逐步轉成 Tai
 ## Utility 的選擇
 
 - 優先使用已有的語意 token，例如 bg-surface、border-border、text-text-muted，以當下 @theme 的定義為準。
-- 優先採用語意與效果相同的簡短 utility。若既有 utility 引用同一個 CSS 變數，例如 `rounded-lg` 與 `rounded-[var(--radius-lg)]`，使用前者；沒有對應 utility 時，可使用變數簡寫，例如 `rounded-(--radius)`。採納 lint 建議前，確認產出的宣告與變數引用一致，不只比較目前的像素值；對應關係不明確時，再查定義或編譯結果。
-- 尺寸能精確對應時使用標準 utility；否則可用 arbitrary value。不要為了採用預設級距而四捨五入原本尺寸。
+- 語意與效果相同時，盡量簡化變數引用與具名 token 的寫法。例如 `rounded-[var(--radius-lg)]` 應簡化為引用同一變數的 `rounded-lg`；沒有對應 utility 時，可使用變數簡寫，例如 `rounded-(--radius)`。確認產出的宣告與變數引用一致，不只比較目前的像素值；對應關係不明確時，再查定義或編譯結果。
+- 數字型 spacing／尺寸 utility 優先使用能直接讀出尺寸的明確像素寫法，涵蓋 margin、padding、gap、寬高及最小／最大寬高。例如使用 `h-[32px]`、`mt-[8px]`、`gap-[6px]`，而非 `h-8`、`mt-2`、`gap-1.5`；整數與小數級距皆適用，不保留「常用半級距」例外。不要為了使用標準 utility 而四捨五入原本尺寸。
+- 固定 1px 的 spacing 優先使用 `*-px`，例如 `mt-px`、`py-px`；零值可保留 `m-0`、`p-0` 等簡短寫法。
+- 保留 `h-full`、`h-screen`、`h-auto`、`w-fit` 等語意寫法，以及 `rounded-lg` 等具名 token；不因其目前可換算成像素就展開成固定數值。數字型 spacing／尺寸的可讀性偏好優先於一般簡化或 lint 的 canonical 建議，但不擴及 opacity、font-weight、無單位 line-height 等其他數字參數。
+- 以實際樣式與原始尺寸為準，不一律假設 spacing 單位是 4px。若尺寸刻意跟隨 spacing token、相對單位或響應式計算，須保留該用途，不為符合像素偏好而改成固定值。
 - 保留斷點的數值與邊界語意。例如 max-width: 700px 包含 700px，可用 [@media(max-width:700px)]:… 精確表達，不直接換成不同的預設斷點。
 - 動態狀態應在原條件下切換完整、可被 Tailwind 掃描的 utility 字串，不動態拼出 utility 名稱。
 - 保持 hover、disabled、完成或選取狀態等原有互動條件，不藉此變更業務邏輯。
