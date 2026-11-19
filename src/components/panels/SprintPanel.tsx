@@ -82,7 +82,7 @@ export default function SprintPanel({
   return (
     <>
       {/* ── 左欄 ── */}
-      <div className="schedule-col">
+      <div className="flex flex-col gap-3">
         <WeeklyMilestones
           milestone={milestone}
           onSet={onSetMilestone}
@@ -91,15 +91,20 @@ export default function SprintPanel({
           onReset={onResetMilestone}
         />
 
-        <div className="card">
-          <div className="card-title">{cardTitle}</div>
+        <div className="rounded-lg border border-border bg-surface px-5 py-4">
+          <div className="mb-3.5 text-[16px] font-semibold tracking-[0.6px] text-text-muted uppercase">
+            {cardTitle}
+          </div>
           {days.map((day, di) => (
-            <div key={day.date} className="day-row">
-              <div className="day-label">
+            <div
+              key={day.date}
+              className="grid grid-cols-[56px_1fr] gap-3 border-t border-border py-2.5 first:border-t-0"
+            >
+              <div className="pt-0.5 leading-[1.4] font-semibold text-text-muted">
                 {day.label}
-                <div className="day-date">{day.date}</div>
+                <div className="font-normal text-text-hint">{day.date}</div>
               </div>
-              <div className="day-tasks">
+              <div className="flex flex-col gap-1.5">
                 <MinWinBadge
                   value={minWins[`${id}_d${di}_minWin`] ?? ""}
                   onChange={(val) => onMinWin(`${id}_d${di}_minWin`, val)}
@@ -119,10 +124,12 @@ export default function SprintPanel({
           ))}
         </div>
 
-        <div className="card">
-          <div className="card-title">{journalTitle}</div>
+        <div className="rounded-lg border border-border bg-surface px-5 py-4">
+          <div className="mb-3.5 text-[16px] font-semibold tracking-[0.6px] text-text-muted uppercase">
+            {journalTitle}
+          </div>
           <textarea
-            className="journal-area"
+            className="w-full resize-y rounded-md border border-border bg-surface-2 px-3 py-2.5 leading-[1.7] text-text-base font-[inherit] field-sizing-content outline-none transition-[border-color] duration-150 ease-[ease] placeholder:text-text-hint focus:border-accent-mid"
             placeholder={journalPlaceholder}
             value={ta(journalId)}
             onChange={(e) => onTextarea(journalId, e.target.value)}
@@ -131,9 +138,11 @@ export default function SprintPanel({
       </div>
 
       {/* ── 右欄 ── */}
-      <div className="sidebar-col">
-        <div className="card">
-          <div className="card-title">學習打卡</div>
+      <div className="flex flex-col gap-3">
+        <div className="rounded-lg border border-border bg-surface px-5 py-4">
+          <div className="mb-3.5 text-[16px] font-semibold tracking-[0.6px] text-text-muted uppercase">
+            學習打卡
+          </div>
           <MiniCalendar
             year={config.year}
             month={config.month}
@@ -149,14 +158,16 @@ export default function SprintPanel({
           onDelete={onDeleteFriction}
         />
 
-        <div className="card">
-          <div className="card-title">{reviewTitle}</div>
+        <div className="rounded-lg border border-border bg-surface px-5 py-4">
+          <div className="mb-3.5 text-[16px] font-semibold tracking-[0.6px] text-text-muted uppercase">
+            {reviewTitle}
+          </div>
           <FrictionPatternSummary entries={frictionEntries} />
 
-          <div className="sprint-metric">
-            <label>與前一週相比</label>
+          <div className="flex items-center justify-between border-t border-border py-2 first-of-type:border-t-0">
+            <label className="text-text-muted">與前一週相比</label>
             <select
-              className="sprint-select"
+              className="w-25 cursor-pointer rounded-[6px] border border-border bg-surface px-2 py-0.75 text-text-base"
               value={sel(progressSelectKey)}
               onChange={(e) =>
                 onSelect(progressSelectKey, Number(e.target.value))
@@ -170,10 +181,10 @@ export default function SprintPanel({
           </div>
 
           {extraMetric && (
-            <div className="sprint-metric">
-              <label>作品集翻新進度</label>
+            <div className="flex items-center justify-between border-t border-border py-2 first-of-type:border-t-0">
+              <label className="text-text-muted">作品集翻新進度</label>
               <select
-                className="sprint-select"
+                className="w-25 cursor-pointer rounded-[6px] border border-border bg-surface px-2 py-0.75 text-text-base"
                 value={sel(portfolioSelectKey)}
                 onChange={(e) =>
                   onSelect(portfolioSelectKey, Number(e.target.value))
@@ -187,12 +198,11 @@ export default function SprintPanel({
             </div>
           )}
 
-          <div className="sprint-metric">
-            <label>本週亮點</label>
+          <div className="flex items-center justify-between border-t border-border py-2 first-of-type:border-t-0">
+            <label className="text-text-muted">本週亮點</label>
           </div>
           <textarea
-            className="journal-area"
-            style={{ minHeight: 60 }}
+            className="min-h-15 w-full resize-y rounded-md border border-border bg-surface-2 px-3 py-2.5 leading-[1.7] text-text-base font-[inherit] field-sizing-content outline-none transition-[border-color] duration-150 ease-[ease] placeholder:text-text-hint focus:border-accent-mid"
             placeholder="完成了什麼？有什麼值得記錄的？"
             value={ta(reviewId)}
             onChange={(e) => onTextarea(reviewId, e.target.value)}
@@ -200,12 +210,11 @@ export default function SprintPanel({
 
           {adjustId && (
             <>
-              <div className="sprint-metric">
-                <label>下一階段調整</label>
+              <div className="flex items-center justify-between border-t border-border py-2 first-of-type:border-t-0">
+                <label className="text-text-muted">下一階段調整</label>
               </div>
               <textarea
-                className="journal-area"
-                style={{ minHeight: 60 }}
+                className="min-h-15 w-full resize-y rounded-md border border-border bg-surface-2 px-3 py-2.5 leading-[1.7] text-text-base font-[inherit] field-sizing-content outline-none transition-[border-color] duration-150 ease-[ease] placeholder:text-text-hint focus:border-accent-mid"
                 placeholder="需要調整節奏嗎？有哪些概念需要補強？"
                 value={ta(adjustId)}
                 onChange={(e) => onTextarea(adjustId, e.target.value)}
